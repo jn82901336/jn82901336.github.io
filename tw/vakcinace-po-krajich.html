@@ -15,6 +15,12 @@
 thead th {
   text-align: center;
 }
+
+.celkem th,  .celkem td{
+ background-color: grey !important;
+ color: white;
+}
+
 </style>
 <body>
 <h1>Přehled vakcinace po krajích</h1>
@@ -36,6 +42,8 @@ url['spotreba']='https://onemocneni-aktualne.mzcr.cz/api/v2/covid-19/ockovani-sp
 var prijem = {};
 var spotreba = {};
 var vakciny = {};
+var celkemS={};
+var celkemP={};
 var thdescr =['vyočkováno','dodáno','%'];
 
  function populateTable(){
@@ -51,6 +59,7 @@ var thdescr =['vyočkováno','dodáno','%'];
    tr.append("<th colspan='3' data-sorter='false'>" + vakcina.replace("COVID-19 Vaccine",'') + "</th>");
    $.each(thdescr,function (l,d){
     tr2.append("<th data-filter='false'>"+d+"</th>");
+    celkemS[vakcina]=celkemP[vakcina]=0;
    });
   });
   thead.append(tr);
@@ -67,9 +76,24 @@ var thdescr =['vyočkováno','dodáno','%'];
     tr.append("<td>" + s + "</td>");
     tr.append("<td>" + p + "</td>");
     tr.append("<td>" + pct + "%</td>");
+    celkemS[vakcina]+=s;
+    celkemP[vakcina]+=p;
    });
    tbody.append(tr);
   });
+
+   var tr = $("<tr class='celkem' />");
+   tr.append("<th>Celkem</th>");
+   $.each(Object.keys(vakciny), function (k,vakcina){
+    var s=celkemS[vakcina];
+    var p=celkemP[vakcina];
+    var pct = (p > 0 ) ? Math.round(s*100/p) : '-';
+    tr.append("<td>" + s + "</td>");
+    tr.append("<td>" + p + "</td>");
+    tr.append("<td>" + pct + "%</td>");
+   });
+   tbody.append(tr);
+   
 
    t.append(tbody);
    
