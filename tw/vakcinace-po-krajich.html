@@ -1,0 +1,141 @@
+<!doctype html>
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+<script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js" integrity="sha256-t9UJPrESBeG2ojKTIcFLPGF7nHi2vEc7f5A2KpH/UBU=" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/tablesorter@2.31.3/dist/js/jquery.tablesorter.combined.min.js" integrity="sha256-ounC3wWwZ9iBUyF8x1+X+REppGjK+p6/+w+ky1MGoMM=" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tablesorter@2.31.3/dist/css/theme.default.min.css" integrity="sha256-5sgExNTnkN8NcApKIU73/aqgZmqq/zJp9+9zXf9aSEw=" crossorigin="anonymous" >
+</head>
+<style>
+#t td {
+ text-align: right;
+}
+#th1 {
+  text-align: center;
+}
+</style>
+<body>
+<table id='t'>
+</table>
+<canvas id="ctx" width="400" height="400"></canvas>
+<script>
+</script>
+</body>
+<script>
+window.onload = function() {
+var url={};
+url['prijem']='https://onemocneni-aktualne.mzcr.cz/api/v2/covid-19/ockovani-distribuce.min.json';
+url['spotreba']='https://onemocneni-aktualne.mzcr.cz/api/v2/covid-19/ockovani-spotreba.min.json';
+var prijem = {};
+var spotreba = {};
+var vakciny = {};
+var thdescr =['spotřeba','příjem','%'];
+
+ function populateTable(){
+
+  var t=$('#t');
+  var thead=$('<thead/>');
+  var tbody=$('<tbody/>');
+  var tr = $('<tr id=\'th1\'/>');
+  var tr2 = $('<tr/>');
+  tr.append("<td/>");
+  tr2.append("<td/>");
+  $.each(Object.keys(vakciny), function (k, vakcina){
+   tr.append("<th colspan='3'>" + vakcina.replace("COVID-19 Vaccine",'') + "</th>");
+   $.each(thdescr,function (l,d){
+    tr2.append("<th>"+d+"</th>");
+   });
+  });
+  thead.append(tr);
+  thead.append(tr2);
+  t.append(thead);
+
+  $.each(Object.keys(prijem), function (key, kraj){
+   var tr = $('<tr/>');
+   tr.append("<th>" + kraj + "</th>");
+   $.each(Object.keys(vakciny), function (k,vakcina){
+    var s=(spotreba[kraj][vakcina]) ? spotreba[kraj][vakcina] : 0;
+    var p=(prijem[kraj][vakcina]) ? prijem[kraj][vakcina] : 0;
+    var pct = (p > 0 ) ? Math.round(s*100/p) : '-';
+    tr.append("<td>" + s + "</td>");
+    tr.append("<td>" + p + "</td>");
+    tr.append("<td>" + pct + "%</td>");
+   });
+   tbody.append(tr);
+  });
+
+   t.append(tbody);
+   
+  $("#t").tablesorter({
+  widgets: ["saveSort", "stickyHeaders","zebra"]
+   }); 
+
+ } //pupulateTable
+ 
+ function addSpotreba(data){
+
+ $.each( data, function(id,row ) {
+   if (Array.isArray(row)) {
+      $.each(row, function (key, val){
+       if (val['pouzite_ampulky'] || val['znehodnocene_ampulky']){
+        var ampulky=val['pouzite_ampulky']+val['znehodnocene_ampulky'];
+//        console.log(ampulky);
+        if (! spotreba[val['kraj_nazev']]) { spotreba[val['kraj_nazev']] = []}
+           spotreba[val['kraj_nazev']][val['ockovaci_latka']] = 
+            (! spotreba[val['kraj_nazev']][val['ockovaci_latka']]) ? ampulky
+           : spotreba[val['kraj_nazev']][val['ockovaci_latka']]+ampulky;
+   
+       }  
+  
+      });
+   } //isArray
+  });
+  console.log(vakciny);
+  populateTable();
+ }
+
+ function addPrijem(data){
+
+ $.each( data, function(id,row ) {
+   if (Array.isArray(row)) {
+      $.each(row, function (key, val){
+       vakciny[val['ockovaci_latka']]=1;
+       if (val['pocet_ampulek']){
+              
+        if (! prijem[val['kraj_nazev']]) { prijem[val['kraj_nazev']] = []}
+        if (val['cilovy_kraj_nazev'] && ! prijem[val['cilovy_kraj_nazev']]) { prijem[val['cilovy_kraj_nazev']] = []}
+   
+         if(val['akce']=='Příjem'){
+           prijem[val['kraj_nazev']][val['ockovaci_latka']] = 
+            (! prijem[val['kraj_nazev']][val['ockovaci_latka']]) ? val['pocet_ampulek']
+           : prijem[val['kraj_nazev']][val['ockovaci_latka']]+val['pocet_ampulek'];
+         }
+   
+        if (val['cilovy_kraj_kod'] != '' && val['kraj_nazev'] != val['cilovy_kraj_nazev']){
+           prijem[val['kraj_nazev']][val['ockovaci_latka']]-=val['pocet_ampulek'];
+           if (! prijem[val['cilovy_kraj_nazev']][val['ockovaci_latka']]){
+               prijem[val['cilovy_kraj_nazev']][val['ockovaci_latka']]=val['pocet_ampulek'];
+           }else{
+               prijem[val['cilovy_kraj_nazev']][val['ockovaci_latka']]+=val['pocet_ampulek'];
+           }
+           
+        }
+       }  
+  
+      });
+   } //isArray
+  });
+
+ $.getJSON(url['spotreba'], addSpotreba);
+ }//addPrijem
+
+$.getJSON(url['prijem'], addPrijem);
+
+
+
+}
+
+</script>
+
+</html>
