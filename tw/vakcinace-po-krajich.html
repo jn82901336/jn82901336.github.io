@@ -31,7 +31,7 @@ thead th {
 údaje v dávkách<br>
 vyočkováno=evidovaná očkování (1)<br>
 vyskladněno=vyskladněno z krajských skladů k očkování(2)<br>
-dodáno=+dodávky z centralního do krajsých skladů+-mezikrajové převody (3)<br>
+dodáno=+dodávky z centralního do krajských skladů+-mezikrajové převody (3)<br>
 data z <a href='https://onemocneni-aktualne.mzcr.cz/api/v2/covid-19'>https://onemocneni-aktualne.mzcr.cz/api/v2/covid-19</a><br>
 1: COVID-19: Přehled vykázaných očkování podle krajů ČR<span id='dockovani'></span></br>
 2: COVID-19: Přehled spotřeby podle očkovacích míst ČR<span id='dspotreba'></span></br>
@@ -79,7 +79,7 @@ var thdescr =['dodáno','vyočkováno','%','vyskladněno','%'];
 
   $.each(Object.keys(prijem), function (key, kraj){
    var tr = $('<tr/>');
-   tr.append("<th>" + kraj.replace(" kraj",'') + "</th>");
+   tr.append("<th>" + kraj.replace(/kraj/i,'') + "</th>");
    $.each(Object.keys(vakciny), function (k,vakcina){
     var s=(spotreba[kraj][vakcina]) ? spotreba[kraj][vakcina] : 0;
     var o=(ockovani[kraj][vakcina]) ? ockovani[kraj][vakcina] : 0;
@@ -135,7 +135,6 @@ var thdescr =['dodáno','vyočkováno','%','vyskladněno','%'];
       $.each(row, function (key, val){
        if (val['pouzite_davky'] || val['znehodnocene_davky']){
         var ampulky=val['pouzite_davky']+val['znehodnocene_davky'];
-//        console.log(ampulky);
         if (! spotreba[val['kraj_nazev']]) { spotreba[val['kraj_nazev']] = []}
            spotreba[val['kraj_nazev']][val['ockovaci_latka']] = 
             (! spotreba[val['kraj_nazev']][val['ockovaci_latka']]) ? ampulky
@@ -159,8 +158,6 @@ var thdescr =['dodáno','vyočkováno','%','vyskladněno','%'];
        vakciny[val['ockovaci_latka']]=1;
        if (val['pocet_ampulek']){
 
-//       console.log(timelineP);
-//       console.log(val);
 
        var kraj=val['kraj_nuts_kod'];       
        var ockovaci_latka=val['ockovaci_latka'];       
@@ -220,7 +217,6 @@ var thdescr =['dodáno','vyočkováno','%','vyskladněno','%'];
     $('#dprijem').html('('+row+')');    
    } //isArray
   });
- //console.log(timelineP);
  $.getJSON(url['ockovani'], addOckovani);
  }//addPrijem
 
@@ -247,7 +243,6 @@ function addOckovani(data){
     $('#dockovani').html('('+row+')');
    }//isArray  
  });
- console.log(ockovani);
  $.getJSON(url['spotreba'], addSpotreba);
 }//addOckovani
 
