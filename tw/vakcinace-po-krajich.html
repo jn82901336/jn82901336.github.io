@@ -26,6 +26,8 @@ thead th {
 </style>
 <body>
 <h1>Přehled vakcinace po krajích</h1>
+<table>
+
 <table id='t'>
 </table>
 údaje v dávkách<br>
@@ -101,11 +103,13 @@ var thdescr =['dodáno','vyočkováno','%'];
 
    var tr = $("<tr class='celkem' />");
    tr.append("<th>Celkem</th>");
+   var sklad=0;
    $.each(Object.keys(vakciny), function (k,vakcina){
 //    var s=celkemS[vakcina];
     var p=celkemP[vakcina];
     var o=celkemO[vakcina];
     var opct = (p > 0 ) ? Math.round(o*100/p) : '-';
+    sklad+=(p-o);
 //    var spct = (p > 0 ) ? Math.round(s*100/p) : '-';
     tr.append("<td>" + p + "</td>");
     tr.append("<td>" + o + "</td>");
@@ -113,11 +117,12 @@ var thdescr =['dodáno','vyočkováno','%'];
 //    tr.append("<td>" + s + "</td>");
 //    tr.append("<td>" + spct + "%</td>");
    });
+   
    tbody.append(tr);
    
 
    t.append(tbody);
-   
+   $('#sklad').html(sklad);
   $("#t").tablesorter({
   widgets: ["filter", "stickyHeaders","zebra","staticRow"],
    widgetOptions: {
