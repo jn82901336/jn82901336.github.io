@@ -30,12 +30,12 @@ thead th {
 </table>
 údaje v dávkách<br>
 vyočkováno=evidovaná očkování (1)<br>
-vyskladněno=vyskladněno z krajských skladů k očkování(2)<br>
-dodáno=+dodávky z centralního do krajských skladů+-mezikrajové převody (3)<br>
+<!-- vyskladněno=vyskladněno z krajských skladů k očkování(2)<br> -->
+dodáno=+dodávky z centralního do krajských skladů+-mezikrajové převody (2)<br>
 data z <a href='https://onemocneni-aktualne.mzcr.cz/api/v2/covid-19'>https://onemocneni-aktualne.mzcr.cz/api/v2/covid-19</a><br>
-1: COVID-19: Přehled vykázaných očkování podle krajů ČR<span id='dockovani'></span></br>
-2: COVID-19: Přehled spotřeby podle očkovacích míst ČR<span id='dspotreba'></span></br>
-3: COVID-19: Přehled distribuce očkovacích látek v ČR <span id='dprijem'></span><br>
+1: COVID-19: Přehled vykázaných očkování podle krajů ČR <span id='dockovani'>..nahrávám</span></br>
+<!-- 2: COVID-19: Přehled spotřeby podle očkovacích míst ČR <span id='dspotreba'>..nahrávám</span></br> -->
+2: COVID-19: Přehled distribuce očkovacích látek v ČR <span id='dprijem'>..nahrávám</span><br>
 <!-- canvas id="ctx" width="400" height="400"></canvas-->
 <script>
 </script>
@@ -55,7 +55,8 @@ var vakciny = {};
 var celkemO={};
 var celkemS={};
 var celkemP={};
-var thdescr =['dodáno','vyočkováno','%','vyskladněno','%'];
+// var thdescr =['dodáno','vyočkováno','%','vyskladněno','%'];
+var thdescr =['dodáno','vyočkováno','%'];
 
  function populateTable(){
 
@@ -67,7 +68,7 @@ var thdescr =['dodáno','vyočkováno','%','vyskladněno','%'];
   tr.append("<td data-sorter='false'/>");
   tr2.append("<td data-sorter='false'/>");
   $.each(Object.keys(vakciny), function (k, vakcina){
-   tr.append("<th colspan='5' data-sorter='false'>" + vakcina.replace("COVID-19 Vaccine",'') + "</th>");
+   tr.append("<th colspan='3' data-sorter='false'>" + vakcina.replace("COVID-19 Vaccine",'') + "</th>");
    $.each(thdescr,function (l,d){
     tr2.append("<th data-filter='false'>"+d+"</th>");
     celkemS[vakcina]=celkemO[vakcina]=celkemP[vakcina]=0;
@@ -81,17 +82,17 @@ var thdescr =['dodáno','vyočkováno','%','vyskladněno','%'];
    var tr = $('<tr/>');
    tr.append("<th>" + kraj.replace(/kraj/i,'') + "</th>");
    $.each(Object.keys(vakciny), function (k,vakcina){
-    var s=(spotreba[kraj][vakcina]) ? spotreba[kraj][vakcina] : 0;
+//    var s=(spotreba[kraj][vakcina]) ? spotreba[kraj][vakcina] : 0;
     var o=(ockovani[kraj][vakcina]) ? ockovani[kraj][vakcina] : 0;
     var p=(prijem[kraj][vakcina]) ? prijem[kraj][vakcina] : 0;
     var opct = (p > 0 ) ? Math.round(o*100/p) : '-';
-    var spct = (p > 0 ) ? Math.round(s*100/p) : '-';
+//    var spct = (p > 0 ) ? Math.round(s*100/p) : '-';
     tr.append("<td>" + p + "</td>");
     tr.append("<td>" + o + "</td>");
     tr.append("<td>" + opct + "%</td>");
-    tr.append("<td>" + s + "</td>");
-    tr.append("<td>" + spct + "%</td>");
-    celkemS[vakcina]+=s;
+//    tr.append("<td>" + s + "</td>");
+//    tr.append("<td>" + spct + "%</td>");
+//    celkemS[vakcina]+=s;
     celkemP[vakcina]+=p;
     celkemO[vakcina]+=o;
    });
@@ -101,16 +102,16 @@ var thdescr =['dodáno','vyočkováno','%','vyskladněno','%'];
    var tr = $("<tr class='celkem' />");
    tr.append("<th>Celkem</th>");
    $.each(Object.keys(vakciny), function (k,vakcina){
-    var s=celkemS[vakcina];
+//    var s=celkemS[vakcina];
     var p=celkemP[vakcina];
     var o=celkemO[vakcina];
     var opct = (p > 0 ) ? Math.round(o*100/p) : '-';
-    var spct = (p > 0 ) ? Math.round(s*100/p) : '-';
+//    var spct = (p > 0 ) ? Math.round(s*100/p) : '-';
     tr.append("<td>" + p + "</td>");
     tr.append("<td>" + o + "</td>");
     tr.append("<td>" + opct + "%</td>");
-    tr.append("<td>" + s + "</td>");
-    tr.append("<td>" + spct + "%</td>");
+//    tr.append("<td>" + s + "</td>");
+//    tr.append("<td>" + spct + "%</td>");
    });
    tbody.append(tr);
    
@@ -151,8 +152,10 @@ var thdescr =['dodáno','vyočkováno','%','vyskladněno','%'];
  }
 
  function addPrijem(data){
-
+     var a=b=0;
+   
  $.each( data, function(id,row ) {
+
    if (Array.isArray(row)) {
       $.each(row, function (key, val){
        vakciny[val['ockovaci_latka']]=1;
@@ -172,7 +175,7 @@ var thdescr =['dodáno','vyočkováno','%','vyskladněno','%'];
        
        }
 
-        if (! prijem[val['kraj_nazev']]) { 
+        if (typeof  prijem[val['kraj_nazev']] === 'undefined') { 
           prijem[val['kraj_nazev']] = {};
         }
 
@@ -190,18 +193,23 @@ var thdescr =['dodáno','vyočkováno','%','vyskladněno','%'];
              timelineP[datum][kraj][ockovaci_latka]+=pocet_davek;
             }
          }
-   
         if (val['cilovy_kraj_kod'] != '' && val['kraj_nazev'] != val['cilovy_kraj_nazev']){
-           //z kraje
-           prijem[val['kraj_nazev']][val['ockovaci_latka']]-=pocet_davek;
+           if (! prijem[val['kraj_nazev']][val['ockovaci_latka']]){
+             prijem[val['kraj_nazev']][val['ockovaci_latka']]=-pocet_davek;
+           }else{
+             prijem[val['kraj_nazev']][val['ockovaci_latka']]-=pocet_davek;
+           }
+           a-=pocet_davek;
            if(! timelineP[datum][cilovy_kraj_kod]) timelineP[datum][cilovy_kraj_kod]=[];
            if(! timelineP[datum][cilovy_kraj_kod][ockovaci_latka])timelineP[datum][cilovy_kraj_kod][ockovaci_latka]=[];
            timelineP[datum][cilovy_kraj_kod][ockovaci_latka]-=pocet_davek;
            //do kraje
-           if (! prijem[val['cilovy_kraj_nazev']][val['ockovaci_latka']]){
+           if (typeof prijem[val['cilovy_kraj_nazev']][val['ockovaci_latka']]  === 'undefined'){
                prijem[val['cilovy_kraj_nazev']][val['ockovaci_latka']]=pocet_davek;
+               b+=pocet_davek;
            }else{
                prijem[val['cilovy_kraj_nazev']][val['ockovaci_latka']]+=pocet_davek;
+               b+=pocet_davek; 
            }
 /*           if (! timelineP[val['cilovy_kraj_kod']][val['ockovaci_latka']][val['datum']]){
                timelineP[val['cilovy_kraj_kod']][val['ockovaci_latka']][val['datum']]=val['pocet_ampulek'];
@@ -209,13 +217,13 @@ var thdescr =['dodáno','vyočkováno','%','vyskladněno','%'];
                timelineP[val['cilovy_kraj_kod']][val['ockovaci_latka']][val['datum']]+=val['pocet_ampulek'];
            }
 */           
-        }
+        } 
        }  
-  
       });
    }else if(id=='modified'){
     $('#dprijem').html('('+row+')');    
-   } //isArray
+} //isArray
+   
   });
  $.getJSON(url['ockovani'], addOckovani);
  }//addPrijem
@@ -243,7 +251,9 @@ function addOckovani(data){
     $('#dockovani').html('('+row+')');
    }//isArray  
  });
- $.getJSON(url['spotreba'], addSpotreba);
+// $.getJSON(url['spotreba'], addSpotreba);
+   populateTable();
+ 
 }//addOckovani
 
 
