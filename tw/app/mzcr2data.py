@@ -10,9 +10,14 @@ import sys
 import requests
 import json
 import string
+import locale
+import datetime
 
-from datetime import datetime, date
+#from datetime import datetime, date
 from copy import deepcopy
+
+
+locale.setlocale(locale.LC_ALL, 'cs_CZ.UTF-8')
 
 
 #from collections import defaultdict
@@ -147,6 +152,8 @@ final_output = template.safe_substitute(
   thead=thead,
   tbody=tbody,
   free=free,
+  dnes=datetime.date.today().strftime("%d %B %Y"),
+
   )
 with open("../vakcinace-po-krajich.html", "w") as output:
     output.write(final_output)

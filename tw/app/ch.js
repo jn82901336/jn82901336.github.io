@@ -114,8 +114,8 @@ function addOckovani(d){
                 }else if(tooltipItem.datasetIndex<2*vCnt){
                  var label = data.datasets[tooltipItem.datasetIndex].label || '';
                  var O = data.datasets[tooltipItem.datasetIndex-vCnt]['data'][tooltipItem.index];
-                 label += ' '+tooltipItem.yLabel + '-' + O + '=' + (O-tooltipItem.yLabel);
-                 label += ' (' + (100-Math.round((O-tooltipItem.yLabel)*100/tooltipItem.yLabel))+ '%)';
+                 label += ' '+tooltipItem.yLabel;
+                 label += ' (' + (Math.round(tooltipItem.yLabel*100/O))+ '%)';
                 }else{
                  var label = data.datasets[tooltipItem.datasetIndex].label || '';
                  label += ' ' + tooltipItem.yLabel;
