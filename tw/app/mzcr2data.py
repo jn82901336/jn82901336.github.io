@@ -120,7 +120,7 @@ for r in data['data']:
 #print(curdate)
 #prijemT[curdate]=prijem
 
-kraj['CZ']='Celkem'
+kraj['CZ']='Celkem ČR'
 
 thead="<tr><th data-sorter='false'></th>"
 thead2="<tr><th data-sorter='false'></th>"

@@ -133,7 +133,19 @@ function addOckovani(d){
          mode: 'index',
          intersect: false
         },
-    } 
+
+    }, 
+        plugins: [{
+         id: 'bgcolor',
+         afterRender: (g) => {
+          const c = g.canvas.getContext('2d');
+          c.save();
+          c.globalCompositeOperation = 'destination-over';
+          c.fillStyle = 'white';
+          c.fillRect(0, 0, g.canvas.width, g.canvas.height);
+          c.restore();
+         }
+        }]// plugins 
     });
     
 
