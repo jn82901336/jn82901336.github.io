@@ -18,7 +18,7 @@ function graf(co){
 
  });
 
- chart.data.datasets.push({label: 'Nevyočkováno celkem', data: [], yAxisID: 'yP', backgroundColor: '#111111'});
+ chart.data.datasets.push({label: 'Nevyočkováno celkem', data: [], yAxisID: 'yP'});
  
  var TlastP=TlastO=0;
  $.each(Object.keys(data), function (k,dt){
