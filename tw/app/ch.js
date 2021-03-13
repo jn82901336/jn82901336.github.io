@@ -4,18 +4,21 @@ function graf(co){
  chart.data.datasets = [];
 
  chart.options.title.text=$('#'+co+' th').html();
-
+ var color_index=0;
  $.each(vakciny, function (i,vakcina){
-     chart.data.datasets.push({hidden: true, label: vakcina+' D', data: [], yAxisID: 'yP', fill: false, borderColor: default_colors[i]});
+     chart.data.datasets.push({hidden: true, label: vakcina+' D', data: [], yAxisID: 'yP', fill: false, borderColor: default_colors[color_index]});
      lastP[vakcina]=0;
+     color_index++;
  });
 
  $.each(vakciny, function (i,vakcina){
-     chart.data.datasets.push({hidden: true, label: vakcina+' V', data: [], yAxisID: 'yP', fill: false, borderColor: default_colors[i+5]});
+     chart.data.datasets.push({hidden: true, label: vakcina+' V', data: [], yAxisID: 'yP', fill: false, borderColor: default_colors[color_index]});
      lastO[vakcina]=0;
+     color_index++;
+
  });
 
- chart.data.datasets.push({label: 'Nevyočkováno celkem', data: [], yAxisID: 'yP'});
+ chart.data.datasets.push({label: 'Nevyočkováno celkem', data: [], yAxisID: 'yP', backgroundColor: '#111111'});
  
  var TlastP=TlastO=0;
  $.each(Object.keys(data), function (k,dt){
@@ -145,7 +148,7 @@ var ockovaniT;
 var chart;
 var data={};
 var vakciny={}
-var default_colors = ['#3366CC','#DC3912','#109618','#3B3EAC','#990099','#0099C6','#DD4477','#FF9900','#66AA00','#B82E2E','#316395','#994499','#22AA99','#AAAA11','#6633CC','#E67300','#8B0707','#329262','#5574A6','#3B3EAC'] ;
+var default_colors = ['#3366CC','#994499','#109618','#0099C6','#DD4477','#22AA99', '#E67300','#FF9900','#66AA00','#6633CC','#B82E2E','#316395','#DC3912','#AAAA11','#3B3EAC','#8B0707','#329262','#5574A6','#3B3EAC','#990099'] ;
 $(function () {
  $.getJSON('data/prijemT.min.json', addPrijem);
  $('tr[id^=CZ]').click(function(i){graf($(this).attr('id'));});
