@@ -6,20 +6,22 @@ function graf(co){
  chart.options.title.text=$('#'+co+' th').html();
  var color_index=0;
  $.each(vakciny, function (i,vakcina){
-     chart.data.datasets.push({hidden: true, label: vakcina+' D', data: [], yAxisID: 'yP', fill: false, borderColor: default_colors[color_index]});
+     var dv = (dataset_visibility[color_index]) ? false :  true;
+     chart.data.datasets.push({hidden: dv, label: vakcina+' D', data: [], yAxisID: 'yP', fill: false, borderColor: default_colors[color_index]});
      lastP[vakcina]=0;
      color_index++;
  });
 
  $.each(vakciny, function (i,vakcina){
-     chart.data.datasets.push({hidden: true, label: vakcina+' V', data: [], yAxisID: 'yP', fill: false, borderColor: default_colors[color_index]});
+     var dv = (dataset_visibility[color_index]) ? false :  true;
+     chart.data.datasets.push({hidden: dv, label: vakcina+' V', data: [], yAxisID: 'yP', fill: false, borderColor: default_colors[color_index]});
      lastO[vakcina]=0;
      color_index++;
-
  });
 
- chart.data.datasets.push({label: 'Nevyočkováno celkem', data: [], yAxisID: 'yP'});
- 
+ var dv = (dataset_visibility[color_index]) ? false :  true;
+ chart.data.datasets.push({hidden: dv, label: 'Nevyočkováno celkem', data: [], yAxisID: 'yP'});
+  
  var TlastP=TlastO=0;
  $.each(Object.keys(data), function (k,dt){
   $.each(vakciny, function (i,vakcina){
@@ -64,9 +66,15 @@ function addOckovani(d){
       data[el]=0;
       last_dt=el;
     });
-
-    vakciny=Object.keys(prijemT[last_dt]['CZ']);
+    vakciny=Object.keys(prijemT[ Object.keys(prijemT)[Object.keys(prijemT).length - 1]]['CZ']);
     vCnt=vakciny.length;
+
+    var orig = Chart.defaults.global.legend.onClick;
+    Chart.defaults.global.legend.onClick = function(e, legendItem) {
+      dataset_visibility[legendItem.datasetIndex]=legendItem.hidden;
+      orig.call(this, e, legendItem);
+    };
+ 
 
     var ctx = document.getElementById('graf').getContext('2d');
     chart = new Chart(ctx, {
@@ -74,7 +82,7 @@ function addOckovani(d){
     type: 'line',
     data: {
      labels: Object.keys(data),
-     },
+    },
     options: {
         title: {
             display: true,
@@ -134,7 +142,7 @@ function addOckovani(d){
          intersect: false
         },
 
-    }, 
+    },//options 
         plugins: [{
          id: 'bgcolor',
          afterRender: (g) => {
@@ -147,8 +155,6 @@ function addOckovani(d){
          }
         }]// plugins 
     });
-    
-
     graf('CZ');
 }//addOckovani
 
@@ -159,7 +165,9 @@ var prijemT;
 var ockovaniT;
 var chart;
 var data={};
-var vakciny={}
+var vakciny={};
+var dataset_visibility=[0,0,0,0,0,0,1];
+
 var default_colors = ['#3366CC','#994499','#109618','#0099C6','#DD4477','#22AA99', '#E67300','#FF9900','#66AA00','#6633CC','#B82E2E','#316395','#DC3912','#AAAA11','#3B3EAC','#8B0707','#329262','#5574A6','#3B3EAC','#990099'] ;
 $(function () {
  $.getJSON('data/prijemT.min.json', addPrijem);
