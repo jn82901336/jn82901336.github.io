@@ -65,7 +65,7 @@ function addOckovani(d){
       last_dt=el;
     });
 
-    vakciny=Object.keys(vakcinyT[last_dt]['CZ']);
+    vakciny=Object.keys(prijemT[last_dt]['CZ']);
     vCnt=vakciny.length;
 
     var ctx = document.getElementById('graf').getContext('2d');
