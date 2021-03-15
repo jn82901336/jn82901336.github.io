@@ -66,6 +66,7 @@ function addOckovani(d){
       data[el]=0;
       last_dt=el;
     });
+
     vakciny=Object.keys(prijemT[ Object.keys(prijemT)[Object.keys(prijemT).length - 1]]['CZ']);
     vCnt=vakciny.length;
 
@@ -114,7 +115,8 @@ function addOckovani(d){
          intersect: false,
          callbacks: {
          title: function(tooltipItem, data) {
-                 return data['labels'][tooltipItem[0]['index']];
+                 d = new Date(data['labels'][tooltipItem[0]['index']]);
+                 return tden[d.getDay()]+" "+data['labels'][tooltipItem[0]['index']];
                 },
          label: function(tooltipItem, data) {
                 if ( tooltipItem.datasetIndex < vCnt ){
@@ -167,6 +169,7 @@ var chart;
 var data={};
 var vakciny={};
 var dataset_visibility=[0,0,0,0,0,0,1];
+var tden=['Ne','Po','Út','St','Čt','Pá','So']
 
 var default_colors = ['#3366CC','#994499','#109618','#0099C6','#DD4477','#22AA99', '#E67300','#FF9900','#66AA00','#6633CC','#B82E2E','#316395','#DC3912','#AAAA11','#3B3EAC','#8B0707','#329262','#5574A6','#3B3EAC','#990099'] ;
 $(function () {
