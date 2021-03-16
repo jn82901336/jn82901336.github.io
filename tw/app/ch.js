@@ -7,14 +7,14 @@ function graf(co){
  var color_index=0;
  $.each(vakciny, function (i,vakcina){
      var dv = (dataset_visibility[color_index]) ? false :  true;
-     chart.data.datasets.push({hidden: dv, label: vakcina+' D', data: [], yAxisID: 'yP', fill: false, borderColor: default_colors[color_index]});
+     chart.data.datasets.push({hidden: dv, label: vakcina+' D', data: [], yAxisID: 'yP', fill: false, backgroundColor: default_colors[color_index], borderColor: default_colors[color_index]});
      lastP[vakcina]=0;
      color_index++;
  });
 
  $.each(vakciny, function (i,vakcina){
      var dv = (dataset_visibility[color_index]) ? false :  true;
-     chart.data.datasets.push({hidden: dv, label: vakcina+' V', data: [], yAxisID: 'yP', fill: false, borderColor: default_colors[color_index]});
+     chart.data.datasets.push({hidden: dv, label: vakcina+' V', data: [], yAxisID: 'yP', fill: false, backgroundColor: default_colors[color_index], borderColor: default_colors[color_index]});
      lastO[vakcina]=0;
      color_index++;
  });
