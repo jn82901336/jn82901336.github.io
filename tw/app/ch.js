@@ -199,7 +199,7 @@ var vakciny={};
 var dataset_visibility=[0,0,0,0,0,0,1];
 var tden=['Ne','Po','Út','St','Čt','Pá','So']
 
-var default_colors = ['#3366CC','#994499','#109618','#0099C6','#DD4477','#22AA99', '#E67300','#FF9900','#66AA00','#6633CC','#B82E2E','#316395','#DC3912','#AAAA11','#3B3EAC','#8B0707','#329262','#5574A6','#3B3EAC','#990099'] ;
+var default_colors = ['#3366CC','#994499','#109618','#0099C6','#DD4477','#22AA99','','#6633CC','#E67300', '#66AA00',  '#FF9900', '#B82E2E','#316395','#DC3912','#AAAA11','#3B3EAC','#8B0707','#329262','#5574A6','#3B3EAC','#990099'] ;
 $(function () {
  $.getJSON('data/prijemT.min.json', addPrijem);
  $('tr[id^=CZ]').click(function(i){graf($(this).attr('id'));});

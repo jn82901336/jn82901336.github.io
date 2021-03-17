@@ -1,6 +1,7 @@
 <!doctype html>
 <html>
 <head>
+<title>ockovani po krajich</title>
 <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
 <meta name="author" content="@jn82901336">
 <meta name="twitter:card" content="summary" />
@@ -38,13 +39,15 @@ thead th {
 </style>
 <script>
 window.onload = function() {
-$("#t").tablesorter({
+var table = $("#t").tablesorter({
   widgets: ["filter", "stickyHeaders","zebra","staticRow"],
    widgetOptions: {
-     staticRow_class: "#CZ"
+     staticRow_class: "#CZ",
+       filter_columnFilters: false,
     }
   
    });
+$.tablesorter.filter.bindSearch(table, $('.search') );   
 }
 </script>
 <body>
@@ -53,7 +56,7 @@ Centrální sklad: Comirnaty: ? Moderna: ? AstraZeneca: 27380
 <table id='t'>
 <thead>
 <tr><th data-sorter='false'></th><th colspan='3' data-sorter='false'>Comirnaty</th><th colspan='3' data-sorter='false'>Moderna</th><th colspan='3' data-sorter='false'>AstraZeneca</th></tr>
-<tr><th data-sorter='false'></th><th>dodáno</th><th>vyočkováno</th><th>%</th><th>dodáno</th><th>vyočkováno</th><th>%</th><th>dodáno</th><th>vyočkováno</th><th>%</th></tr>
+<tr><th data-sorter='false'><input data-column='all' class='search tablesorter-filter' type='search' name='search'></th><th data-filter='false'>dodáno</th><th data-filter='false'>vyočkováno</th><th data-filter='false'>%</th><th data-filter='false'>dodáno</th><th data-filter='false'>vyočkováno</th><th data-filter='false'>%</th><th data-filter='false'>dodáno</th><th data-filter='false'>vyočkováno</th><th data-filter='false'>%</th></tr>
 
 </thead>
 <tbody>

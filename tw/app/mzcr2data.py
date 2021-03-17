@@ -136,6 +136,7 @@ for r in data['data']:
         prijem[r['kraj_nuts_kod']][vakcina]+=r['pocet_davek']
      except KeyError:
         prijem[r['kraj_nuts_kod']][vakcina]=r['pocet_davek']
+
     elif not r['kraj_nuts_kod'] == r['cilovy_kraj_kod'] and r['cilovy_kraj_kod'] != '':
      
      try:
@@ -152,11 +153,11 @@ prijemT[curdate]=prijem
 kraj['CZ']='Celkem ČR'
 
 thead="<tr><th data-sorter='false'></th>"
-thead2="<tr><th data-sorter='false'></th>"
+thead2="<tr><th data-sorter='false'><input data-column='all' class='search tablesorter-filter' type='search' name='search'></th>"
 
 for i,(vakcina) in enumerate(ockovani['CZ']):
     thead += f"<th colspan='3' data-sorter='false'>{vakcina}</th>"
-    thead2+= "<th>dodáno</th><th>vyočkováno</th><th>%</th>"
+    thead2+= "<th data-filter='false'>dodáno</th><th data-filter='false'>vyočkováno</th><th data-filter='false'>%</th>"
 thead+="</tr>\n"+thead2+"</tr>\n"
 
 for kod,kraj in kraj.items():
