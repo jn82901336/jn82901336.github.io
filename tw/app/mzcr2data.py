@@ -1,12 +1,8 @@
 #!/usr/bin/python3
-#url['prijem']='https://onemocneni-aktualne.mzcr.cz/api/v2/covid-19/ockovani-distribuce.min.json';
-#url['spotreba']='https://onemocneni-aktualne.mzcr.cz/api/v2/covid-19/ockovani-spotreba.min.json';
-#url['ockovani']='https://onemocneni-aktualne.mzcr.cz/api/v2/covid-19/ockovani.min.json';
-#var prijem = {};
 url_ockovani='https://onemocneni-aktualne.mzcr.cz/api/v2/covid-19/ockovani.min.json'
 url_prijem='https://onemocneni-aktualne.mzcr.cz/api/v2/covid-19/ockovani-distribuce.min.json'
-url_ockovani='http://localhost/tw/data/ockovani.min.json'
-url_prijem='http://localhost/tw/data/ockovani-distribuce.min.json'
+#url_ockovani='http://localhost/tw/data/ockovani.min.json'
+#url_prijem='http://localhost/tw/data/ockovani-distribuce.min.json'
 
 import sys
 import requests
@@ -22,8 +18,6 @@ from copy import deepcopy
 locale.setlocale(locale.LC_ALL, 'cs_CZ.UTF-8')
 
 
-#from collections import defaultdict
-#ockovani = defaultdict(dict)
 ockovani={'CZ': {}}
 ockovaniT={}
 curdate=''
@@ -81,15 +75,11 @@ except Exception as e:
 modifiedP=data['modified'].split('T');
 curdate=''
 for r in data['data']:
-#    print(curdate, r)
     if not r['datum'] == curdate:
       prijemT[curdate]=deepcopy(prijem)
       curdate=r['datum']
     
     vakcina=r['ockovaci_latka'].replace('COVID-19 Vaccine ','')
-
-#    if not r['datum'] in prijemT:
-#      prijemT[r['datum']]={}
 
     if not r['kraj_nuts_kod'] in prijem:
       prijem[r['kraj_nuts_kod']]={vakcina: 0 }
@@ -116,13 +106,9 @@ for r in data['data']:
      
      prijem[r['kraj_nuts_kod']][vakcina]-=r['pocet_davek']      
 
-#    print(json.dumps(prijemT,indent=1))
-#    print("#############33\n")
 
-#print(curdate)
 prijemT[curdate]=prijem
 
-print(json.dumps(prijemT,indent=1))
 
 kraj['CZ']='Celkem ČR'
 
@@ -183,7 +169,6 @@ File = open("../data/prijemT.min.json", "w")
 File.write(json.dumps(prijemT,ensure_ascii=False,indent=1))
 File.close()
 
-print(modifiedO[0],modifiedP[0])
 print((modifiedO[0]==modifiedP[0]))
 
 
