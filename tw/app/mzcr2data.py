@@ -5,6 +5,8 @@
 #var prijem = {};
 url_ockovani='https://onemocneni-aktualne.mzcr.cz/api/v2/covid-19/ockovani.min.json'
 url_prijem='https://onemocneni-aktualne.mzcr.cz/api/v2/covid-19/ockovani-distribuce.min.json'
+url_ockovani='http://localhost/tw/data/ockovani.min.json'
+url_prijem='http://localhost/tw/data/ockovani-distribuce.min.json'
 
 import sys
 import requests
@@ -79,7 +81,7 @@ except Exception as e:
 modifiedP=data['modified'].split('T');
 curdate=''
 for r in data['data']:
-#    print(curdate, r['datum'])
+#    print(curdate, r)
     if not r['datum'] == curdate:
       prijemT[curdate]=deepcopy(prijem)
       curdate=r['datum']
@@ -118,7 +120,9 @@ for r in data['data']:
 #    print("#############33\n")
 
 #print(curdate)
-#prijemT[curdate]=prijem
+prijemT[curdate]=prijem
+
+print(json.dumps(prijemT,indent=1))
 
 kraj['CZ']='Celkem ČR'
 
@@ -179,6 +183,7 @@ File = open("../data/prijemT.min.json", "w")
 File.write(json.dumps(prijemT,ensure_ascii=False,indent=1))
 File.close()
 
-print((modifiedO[0]==modifiedP[1]))
+print(modifiedO[0],modifiedP[0])
+print((modifiedO[0]==modifiedP[0]))
 
 
