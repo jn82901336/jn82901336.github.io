@@ -6,11 +6,11 @@
 <meta name="twitter:card" content="summary" />
 <meta name="twitter:site" content="@jn82901336" />
 <meta name="twitter:creator" content="@jn82901336" />
-<meta name="twitter:title" content="COVID-19 stav očkování" />
+<meta name="twitter:title" content="271373 nevyočkováno" />
 <meta name="twitter:url" content="https://jn82901336.github.io/tw/vakcinace-po-krajich.html">
 <meta name="twitter:image" content="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4f/Gnome-x-office-spreadsheet.svg/1024px-Gnome-x-office-spreadsheet.svg.png">
 
-<meta name="twitter:description" content="17 března 2021: 243993 nevyočkovaných dávek" />
+<meta name="twitter:description" content="COVID-19, stav očkování 17 března 2021"/>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js" integrity="sha256-t9UJPrESBeG2ojKTIcFLPGF7nHi2vEc7f5A2KpH/UBU=" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/tablesorter@2.31.3/dist/js/jquery.tablesorter.combined.min.js" integrity="sha256-ounC3wWwZ9iBUyF8x1+X+REppGjK+p6/+w+ky1MGoMM=" crossorigin="anonymous"></script>
@@ -41,7 +41,6 @@ window.onload = function() {
 $("#t").tablesorter({
   widgets: ["filter", "stickyHeaders","zebra","staticRow"],
    widgetOptions: {
-        // Note it expects a CSS selector, not a raw class name
      staticRow_class: "#CZ"
     }
   
@@ -49,7 +48,8 @@ $("#t").tablesorter({
 }
 </script>
 <body>
-<h3>Nevyočkováno: 243993 dávek </h3>
+<h3>Nevyočkováno: kraje 243993 + centrální sklad 27380 = 271373 dávek </h3>
+Centrální sklad: Comirnaty: ? Moderna: ? AstraZeneca: 27380 
 <table id='t'>
 <thead>
 <tr><th data-sorter='false'></th><th colspan='3' data-sorter='false'>Comirnaty</th><th colspan='3' data-sorter='false'>Moderna</th><th colspan='3' data-sorter='false'>AstraZeneca</th></tr>
@@ -121,15 +121,19 @@ $("#t").tablesorter({
 </tbody>
 </table>
 <canvas id="graf"></canvas>
-[ <a id="save" download="vakcinace.png"  href="" title="Uložit graf">ulož graf ]</a>
-údaje v dávkách, graf se ovládá kliknutím na řádky tabulky a/nebo na
-legendu; Comirnaty D => dodávky, Comirnaty V => vyočkováno<br>
+[ <a id="save" download="vakcinace.png"  href="" title="Uložit graf">ulož graf ]</a><br>
+kumulativní údaje v dávkách, graf se ovládá kliknutím na řádky tabulky a/nebo na
+legendu; Comirnaty D => dodávky, Comirnaty V => vyočkováno, Comirnaty CS - centralního sklad<br>
 vyočkováno=evidovaná očkování (1)<br>
 <!-- vyskladněno=vyskladněno z krajských skladů k očkování(2)<br> -->
 dodáno=+dodávky z centralního do krajských skladů+-mezikrajové převody (2)<br>
-data z <a href='https://onemocneni-aktualne.mzcr.cz/api/v2/covid-19'>https://onemocneni-aktualne.mzcr.cz/api/v2/covid-19</a><br>
-1: COVID-19: Přehled vykázaných očkování podle krajů ČR <span id='dockovani'>( ['2021-03-17', '08:09:06+01:00'] )</span></br>
+Centrální sklad: dodávky vakcín od výrobců  z ECDC (Vaccine Tracker), státy mají povinnost reportovat nejméně 2x týdně
+(Út,Pá) (3)
+<hr>
+<a target='_blank' href='https://onemocneni-aktualne.mzcr.cz/api/v2/covid-19'>https://onemocneni-aktualne.mzcr.cz/api/v2/covid-19</a>:<br>
+1: COVID-19: Přehled vykázaných očkování podle krajů ČR <span id='dockovani'>( 2021-03-17 )</span></br>
 <!-- 2: COVID-19: Přehled spotřeby podle očkovacích míst ČR <span id='dspotreba'>..nahrávám</span></br> -->
-2: COVID-19: Přehled distribuce očkovacích látek v ČR <span id='dprijem'>( ['2021-03-17', '08:21:32+01:00'] )</span><br>
+2: COVID-19: Přehled distribuce očkovacích látek v ČR <span id='dprijem'>( 2021-03-17 )</span><br>
+3: <a target='_blank' href='https://www.ecdc.europa.eu/en/publications-data/data-covid-19-vaccination-eu-eea'>https://www.ecdc.europa.eu/en/publications-data/data-covid-19-vaccination-eu-eea</a>
 </body>
 </html>

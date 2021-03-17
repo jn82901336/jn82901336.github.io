@@ -1,9 +1,7 @@
 function graf(co){
-
-
  chart.data.datasets = [];
-
  chart.options.title.text=$('#'+co+' th').html();
+
  var color_index=0;
  $.each(vakciny, function (i,vakcina){
      var dv = (dataset_visibility[color_index]) ? false :  true;
@@ -21,8 +19,21 @@ function graf(co){
 
  var dv = (dataset_visibility[color_index]) ? false :  true;
  chart.data.datasets.push({hidden: dv, label: 'Nevyočkováno celkem', data: [], yAxisID: 'yP'});
+ color_index++;
+ 
+ if (co == 'CZ'){
+  $.each(vakciny, function (i,vakcina){
+     var dv = (dataset_visibility[color_index]) ? false :  true;
+     chart.data.datasets.push({hidden: dv, label: vakcina+' CS', data: [], yAxisID: 'yP', fill: false, backgroundColor: default_colors[color_index], borderColor: default_colors[color_index]});
+     lastE[vakcina]=0;
+     color_index++;
+  });
+ }
+
+ 
   
- var TlastP=TlastO=0;
+ var TlastP=TlastO=TlastE=0;
+ var c=0;
  $.each(Object.keys(data), function (k,dt){
   $.each(vakciny, function (i,vakcina){
     cnt=(prijemT?.[dt]?.[co]?.[vakcina]) ? prijemT[dt][co][vakcina] : lastP[vakcina];
@@ -38,12 +49,23 @@ function graf(co){
     if (vakcina=='AstraZeneca') chart.data.datasets[5]['data'].push(cnt);
     lastO[vakcina]=cnt;
     TlastO+=cnt;
-  });
+    
+    if(co=='CZ'){
+     cnt=(ecdcT?.[dt]?.[vakcina]) ? lastE[vakcina]+ecdcT[dt][vakcina] : lastE[vakcina];
+     if (vakcina=='Comirnaty') chart.data.datasets[7]['data'].push(cnt);
+     if (vakcina=='Moderna') chart.data.datasets[8]['data'].push(cnt);
+     if (vakcina=='AstraZeneca') chart.data.datasets[9]['data'].push(cnt);
+     lastE[vakcina]=cnt;
+     TlastE+=cnt;
+     c=9;
+    }else{
+     c=6;
+    } 
+  }); //each vakciny
   chart.data.datasets[6]['data'].push(TlastP-TlastO);
-  TlastP=TlastO=0;
- });
+  TlastP=TlastO=TlastE=0;
+ }); //each date
   
- 
 /* chart.scales['yO'].options.ticks.max=
  chart.scales['yP'].options.ticks.max=
  Object.values(lastP).reduce(function(a, b) {return a + b;});
@@ -53,6 +75,11 @@ function graf(co){
 
 function addPrijem(d){
     prijemT=d;
+    $.getJSON('data/ecdcT.min.json', addECDC);
+}//addPrijem
+
+function addECDC(d){
+    ecdcT=d;
     $.getJSON('data/ockovaniT.min.json', addOckovani);
 }//addPrijem
 
@@ -163,6 +190,7 @@ function addOckovani(d){
 var vCnt=0;
 var lastP={};
 var lastO={};
+var lastE={};
 var prijemT;
 var ockovaniT;
 var chart;
