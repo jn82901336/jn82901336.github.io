@@ -38,7 +38,7 @@ except Exception as e:
  raise Exception(e, "fetch '{0}' fail".format(url))
 
 #modifiedO = datetime.fromisoformat(data['modified']).replace(tzinfo=None)
-modifiedO=data['modified']
+modifiedO=data['modified'].split('T');
 
 for r in data['data']:
 #    print(r)
@@ -76,7 +76,7 @@ except Exception as e:
  raise Exception(e, "fetch '{0}' fail".format(url))
 
 #modifiedP = datetime.fromisoformat(data['modified']).replace(tzinfo=None)
-modifiedP=data['modified']
+modifiedP=data['modified'].split('T');
 curdate=''
 for r in data['data']:
 #    print(curdate, r['datum'])
@@ -179,6 +179,6 @@ File = open("../data/prijemT.min.json", "w")
 File.write(json.dumps(prijemT,ensure_ascii=False,indent=1))
 File.close()
 
-print(modifiedO,modifiedP)
+print((modifiedO[0]==modifiedP[1]))
 
 
