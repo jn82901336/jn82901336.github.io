@@ -179,3 +179,6 @@ File = open("../data/prijemT.min.json", "w")
 File.write(json.dumps(prijemT,ensure_ascii=False,indent=1))
 File.close()
 
+print(modified0,modifiedP)
+
+
