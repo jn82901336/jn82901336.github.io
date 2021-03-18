@@ -36,19 +36,6 @@ thead th {
 }
 
 </style>
-<script>
-window.onload = function() {
-var table = $("#t").tablesorter({
-  widgets: ["filter", "stickyHeaders","zebra","staticRow"],
-   widgetOptions: {
-     staticRow_class: "#CZ",
-       filter_columnFilters: false,
-    }
-  
-   });
-$.tablesorter.filter.bindSearch(table, $('.search') );   
-}
-</script>
 </head>
 <body>
 <h3>Nevyočkováno: kraje ${free} + centrální sklad ${freeCS} = ${freeT} dávek </h3>
@@ -72,9 +59,9 @@ legendu; Comirnaty D => <b>d</b>odávky, Comirnaty V => <b>v</b>yočkováno, Com
 (Út,Pá) (3)
 <hr>
 <a target='_blank' href='https://onemocneni-aktualne.mzcr.cz/api/v2/covid-19'>https://onemocneni-aktualne.mzcr.cz/api/v2/covid-19</a>:<br>
-1: COVID-19: Přehled vykázaných očkování podle krajů ČR <span id='dockovani'>( ${modifiedO} )</span><br>
+1: COVID-19: Přehled vykázaných očkování podle krajů ČR (<span id='dockovani'>${modifiedO}</span>)<br>
 <!-- 2: COVID-19: Přehled spotřeby podle očkovacích míst ČR <span id='dspotreba'>..nahrávám</span><br> -->
-2: COVID-19: Přehled distribuce očkovacích látek v ČR <span id='dprijem'>( ${modifiedP} )</span><br>
+2: COVID-19: Přehled distribuce očkovacích látek v ČR (<span id='dprijem'>${modifiedP}</span>)<br>
 3: <a target='_blank' href='https://www.ecdc.europa.eu/en/publications-data/data-covid-19-vaccination-eu-eea'>https://www.ecdc.europa.eu/en/publications-data/data-covid-19-vaccination-eu-eea</a>
 </body>
 </html>

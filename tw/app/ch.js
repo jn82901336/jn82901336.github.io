@@ -33,7 +33,6 @@ function graf(co){
  
   
  var TlastP=TlastO=TlastE=0;
- var c=0;
  $.each(Object.keys(data), function (k,dt){
   $.each(vakciny, function (i,vakcina){
     cnt=(prijemT?.[dt]?.[co]?.[vakcina]) ? prijemT[dt][co][vakcina] : lastP[vakcina];
@@ -57,14 +56,11 @@ function graf(co){
      if (vakcina=='AstraZeneca') chart.data.datasets[9]['data'].push(cnt);
      lastE[vakcina]=cnt;
      TlastE+=cnt;
-     c=9;
-    }else{
-     c=6;
-    } 
+    }
   }); //each vakciny
   chart.data.datasets[6]['data'].push(TlastP-TlastO);
   TlastP=TlastO=TlastE=0;
- }); //each date
+ }); //each data
   
 /* chart.scales['yO'].options.ticks.max=
  chart.scales['yP'].options.ticks.max=
@@ -88,10 +84,9 @@ function addECDC(d){
 function addOckovani(d){
     ockovaniT=d;
     
-    var last_dt;
     $.each(Object.keys(prijemT).concat(Object.keys(ockovaniT)).sort(), function(i, el) {
       data[el]=0;
-      last_dt=el;
+      if (el==gend) return false;
     });
 
     vakciny=Object.keys(prijemT[ Object.keys(prijemT)[Object.keys(prijemT).length - 1]]['CZ']);
@@ -198,12 +193,26 @@ var data={};
 var vakciny={};
 var dataset_visibility=[0,0,0,0,0,0,1];
 var tden=['Ne','Po','Út','St','Čt','Pá','So']
-
+var gend='';
 var default_colors = ['#3366CC','#994499','#109618','#0099C6','#DD4477','#22AA99','','#6633CC','#E67300', '#66AA00',  '#FF9900', '#B82E2E','#316395','#DC3912','#AAAA11','#3B3EAC','#8B0707','#329262','#5574A6','#3B3EAC','#990099'] ;
 $(function () {
+ gend=new Date(new Date($('#dockovani').html())-3600).toISOString().split('T')[0];
+
+ var table = $("#t").tablesorter({
+  widgets: ["filter", "stickyHeaders","zebra","staticRow"],
+   widgetOptions: {
+     staticRow_class: "#CZ",
+     filter_columnFilters: false,
+    }
+  
+   });
+
+ $.tablesorter.filter.bindSearch(table, $('.search') );   
+
  $.getJSON('data/prijemT.min.json', addPrijem);
- $('tr[id^=CZ]').click(function(i){graf($(this).attr('id'));});
+ $('tr[id^=CZ]').click(function(i){graf($(this).attr('id'))});
  $('#save').click(function(){
       $('#save').attr('href',chart.toBase64Image());
  });
+
 });
