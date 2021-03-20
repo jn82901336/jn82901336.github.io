@@ -158,14 +158,18 @@ thead2="<tr><th data-sorter='false'><input data-column='all' class='search table
 for i,(vakcina) in enumerate(ockovani['CZ']):
     thead += f"<th colspan='3' data-sorter='false'>{vakcina}</th>"
     thead2+= "<th data-filter='false'>dodáno</th><th data-filter='false'>vyočkováno</th><th data-filter='false'>%</th>"
-thead+="</tr>\n"+thead2+"</tr>\n"
+thead+="<th colspan='3' data=sorter='false'>Celkem</th></tr>\n"+thead2+"<th data-filter='false'>dodáno</th><th data-filter='false'>vyočkováno</th><th data-filter='false'>%</th></tr>\n"
 
 for kod,kraj in kraj.items():
    tbody += f"<tr id='{kod}'><th>{kraj}</th>"
+   krajTO=0
+   krajTP=0
    for vakcina,tmp in ockovani['CZ'].items():
      tbody+="<td>"+str(prijem[kod][vakcina])+"</td><td>"+str(ockovani[kod][vakcina])+"</td><td>"+str(int(round(ockovani[kod][vakcina]*100/prijem[kod][vakcina],1)))+"%</td>\n"
-     
-   tbody+="</tr>\n"  
+     krajTO+=ockovani[kod][vakcina]
+     krajTP+=prijem[kod][vakcina]
+
+   tbody+="<td>"+str(krajTP)+"</td><td>"+str(krajTO)+"</td><td>"+str(int(round(krajTO*100/krajTP,1)))+"%</td></tr>\n"  
 
 free=0
 freeCS=0
