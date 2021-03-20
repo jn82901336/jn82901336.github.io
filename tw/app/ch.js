@@ -1,3 +1,38 @@
+/**
+    * https://stackoverflow.com/a/39263992
+    */
+    function movingAvg(array, count, qualifier){
+        var avg = function(array, qualifier){
+
+            var sum = 0, count = 0, val;
+            for (var i in array){
+                val = array[i];
+                if (!qualifier || qualifier(val)){
+                    sum += val;
+                    count++;
+                }
+            }
+
+            return sum / count;
+        };
+
+        var result = [], val;
+
+        for (var i=0; i < count-1; i++)
+            result.push(null);
+
+        for (var i=0, len=array.length - count; i <= len; i++){
+
+            val = avg(array.slice(i, i + count), qualifier);
+            if (isNaN(val))
+                result.push(null);
+            else
+                result.push(Math.round(val));
+        }
+
+        return result;
+    }
+
 function graf(co){
  chart.data.datasets = [];
  chart.options.title.text=$('#'+co+' th').html();
@@ -19,6 +54,10 @@ function graf(co){
 
  var dv = (dataset_visibility[color_index]) ? false :  true;
  chart.data.datasets.push({hidden: dv, label: 'Nevyočkováno celkem', data: [], yAxisID: 'yP'});
+ color_index++;
+
+ var dv = (dataset_visibility[color_index]) ? false :  true;
+ chart.data.datasets.push({hidden: dv, label: 'ø 7 dní', data: [], pointRadius:0 , fill: false, yAxisID: 'yP'});
  color_index++;
  
  if (co == 'CZ'){
@@ -51,9 +90,9 @@ function graf(co){
     
     if(co=='CZ'){
      cnt=(ecdcT?.[dt]?.[vakcina]) ? lastE[vakcina]+ecdcT[dt][vakcina] : lastE[vakcina];
-     if (vakcina=='Comirnaty') chart.data.datasets[7]['data'].push(cnt);
-     if (vakcina=='Moderna') chart.data.datasets[8]['data'].push(cnt);
-     if (vakcina=='AstraZeneca') chart.data.datasets[9]['data'].push(cnt);
+     if (vakcina=='Comirnaty') chart.data.datasets[8]['data'].push(cnt);
+     if (vakcina=='Moderna') chart.data.datasets[9]['data'].push(cnt);
+     if (vakcina=='AstraZeneca') chart.data.datasets[10]['data'].push(cnt);
      lastE[vakcina]=cnt;
      TlastE+=cnt;
     }
@@ -66,6 +105,7 @@ function graf(co){
  chart.scales['yP'].options.ticks.max=
  Object.values(lastP).reduce(function(a, b) {return a + b;});
 */
+ chart.data.datasets[7]['data']= movingAvg(chart.data.datasets[6]['data'], 7);
  chart.update();
 }
 
@@ -194,7 +234,7 @@ var vakciny={};
 var dataset_visibility=[0,0,0,0,0,0,1];
 var tden=['Ne','Po','Út','St','Čt','Pá','So']
 var gend='';
-var default_colors = ['#3366CC','#994499','#109618','#0099C6','#DD4477','#22AA99','','#6633CC','#E67300', '#66AA00',  '#FF9900', '#B82E2E','#316395','#DC3912','#AAAA11','#3B3EAC','#8B0707','#329262','#5574A6','#3B3EAC','#990099'] ;
+var default_colors = ['#3366CC','#994499','#109618','#0099C6','#DD4477','#22AA99','','','#6633CC','#E67300', '#66AA00',  '#FF9900', '#B82E2E','#316395','#DC3912','#AAAA11','#3B3EAC','#8B0707','#329262','#5574A6','#3B3EAC','#990099'] ;
 $(function () {
  gend=new Date(new Date($('#dockovani').html())-3600).toISOString().split('T')[0];
 

@@ -46,6 +46,7 @@ except Exception as e:
 
 for r in data['records']:
  if r['Region'] == 'CZ' and r['TargetGroup']=='ALL':
+  modifiedE=r['YearWeekISO']
   w = Week.fromstring(r['YearWeekISO'])
   dt=w.tuesday().isoformat()
   if r['YearWeekISO'] == '2020-W52':
@@ -190,6 +191,7 @@ with open("template.html") as t:
 final_output = template.safe_substitute(
   modifiedP=modifiedP[0],
   modifiedO=modifiedO[0],
+  modifiedE=modifiedE,
   thead=thead,
   tbody=tbody,
   free=free,
