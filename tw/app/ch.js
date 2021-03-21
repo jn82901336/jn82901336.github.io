@@ -71,7 +71,7 @@ function graf(co){
 
  
   
- var TlastP=TlastO=TlastE=0;
+ var TlastP=TlastO=TlastE=null;
  $.each(Object.keys(data), function (k,dt){
   $.each(vakciny, function (i,vakcina){
     cnt=(prijemT?.[dt]?.[co]?.[vakcina]) ? prijemT[dt][co][vakcina] : lastP[vakcina];

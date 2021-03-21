@@ -1,0 +1,113 @@
+<html>
+<!doctype html>
+<html lang="cs">
+<head>
+<title>dodávky vakcín do ČR</title>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+<meta name="author" content="@jn82901336">
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:site" content="@jn82901336" />
+<meta name="twitter:creator" content="@jn82901336" />
+<meta name="twitter:title" content="Dodávky vakcín do ČR" />
+<script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js" integrity="sha256-t9UJPrESBeG2ojKTIcFLPGF7nHi2vEc7f5A2KpH/UBU=" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@0.7.0"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+<script data-goatcounter="https://jn82901336.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+<script>
+
+function graf(){
+  chart.data.datasets = [];
+  var color_index=0;
+  var lastP=0;
+  var vakciny=Object.keys(ecdcT[ Object.keys(ecdcT)[Object.keys(ecdcT).length - 1]]);
+
+  $.each(vakciny, function (i,vakcina){
+     var dv = (dataset_visibility[color_index]) ? false :  true;
+     chart.data.datasets.push({hidden: dv, label: vakcina, data: [],
+      backgroundColor: default_colors[color_index], borderColor: default_colors[color_index]});
+     lastP[vakcina]=0;
+     $.each(Object.keys(ecdcT), function(i,dt){
+        cnt=(ecdcT?.[dt]?.[vakcina]) ? ecdcT?.[dt]?.[vakcina] : null;
+        chart.data.datasets[color_index]['data'].push(cnt);         
+     });
+     color_index++;
+ });
+
+ chart.update();
+}
+
+function addECDC(d){
+  $.each(d,function(k,v){
+   var d=new Date(k);
+    d.setHours(0,0,0);
+    d.setDate(d.getDate()+4-(d.getDay()||7));
+    var year=d.getFullYear();
+    var week= Math.ceil( ( ( (d-new Date(year,0,1)) / 8.64e7 )+1 ) /7 );
+    ecdcT[year+'-W'+week]=v;
+  });
+  
+    var ctx = document.getElementById('graf').getContext('2d');
+    chart = new Chart(ctx, {
+    plugins: [ChartDataLabels],
+    title: 'Vakcinace',
+    type: 'bar',
+    data: {
+     labels: Object.keys(ecdcT),
+    },
+    options: {
+        plugins: {
+            datalabels: {
+             color: 'black',
+             anchor: 'end',
+             align: 'top',
+            },
+        },
+        title: {
+            display: true,
+            text: 'Dodávky vakcín do ČR'
+        },
+        tooltips: {
+//         mode: 'index',
+         intersect: false,
+        },
+        hover: {
+         mode: 'index',
+         intersect: false
+        },
+
+    },//options 
+        plugins: [{
+         id: 'bgcolor',
+         afterRender: (g) => {
+          const c = g.canvas.getContext('2d');
+          c.save();
+          c.globalCompositeOperation = 'destination-over';
+          c.fillStyle = 'white';
+          c.fillRect(0, 0, g.canvas.width, g.canvas.height);
+          c.restore();
+         }
+        }]// plugins 
+    });
+    graf('CZ');
+    
+}
+var dataset_visibility=[1,1,1,1,1,1,1];
+var default_colors = ['#3366CC','#994499','#109618','#0099C6','#DD4477','#22AA99','','','#6633CC','#E67300', '#66AA00',  '#FF9900', '#B82E2E','#316395','#DC3912','#AAAA11','#3B3EAC','#8B0707','#329262','#5574A6','#3B3EAC','#990099'] ;
+var ecdcT={};
+$(function () {
+ $.getJSON('data/ecdcT.min.json', addECDC);
+ $('#save').click(function(){
+      $('#save').attr('href',chart.toBase64Image());
+ });
+});
+</script>
+</head>
+
+<body>
+<div>
+<canvas id="graf"></canvas>
+</div>
+[ <a id="save" download="dodavky-vakcin-do-CR.png"  href="" title="Uložit graf">ulož graf ]</a> zdroj: https://www.ecdc.europa.eu/en/publications-data/data-covid-19-vaccination-eu-eea
+</body>
+</html>
+
