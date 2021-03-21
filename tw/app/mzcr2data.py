@@ -159,7 +159,7 @@ thead2="<tr><th data-sorter='false'><input data-column='all' class='search table
 for i,(vakcina) in enumerate(ockovani['CZ']):
     thead += f"<th colspan='3' data-sorter='false'>{vakcina}</th>"
     thead2+= "<th data-filter='false'>dodáno</th><th data-filter='false'>vyočkováno</th><th data-filter='false'>%</th>"
-thead+="<th colspan='3' data=sorter='false'>Celkem</th></tr>\n"+thead2+"<th data-filter='false'>dodáno</th><th data-filter='false'>vyočkováno</th><th data-filter='false'>%</th></tr>\n"
+thead+="<th colspan='3' data-sorter='false'>Celkem</th></tr>\n"+thead2+"<th data-filter='false'>dodáno</th><th data-filter='false'>vyočkováno</th><th data-filter='false'>%</th></tr>\n"
 
 for kod,kraj in kraj.items():
    tbody += f"<tr id='{kod}'><th>{kraj}</th>"
