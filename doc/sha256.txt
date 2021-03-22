@@ -1,0 +1,1 @@
+a559459b29a487352bc6031f09b24c90ed6d6f0629a658e31f380820ca56a135  covidpass-dns-validation.txt
