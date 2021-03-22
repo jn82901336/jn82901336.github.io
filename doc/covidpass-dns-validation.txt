@@ -1,0 +1,109 @@
+Domain name system as secure, high available, scalable message validator
+
+summary
+
+Internet DNS (DNSSEC) is secure  highly available, cachable, scalable,
+decentralized, hierarchical  system for providing network related
+information to network entities in Internet.  We can sucessfully use its
+existing robust infrastructure in combination with encryption to securely
+delegate authority and validate messages.  Vaccination passports are example
+of such application.
+
+
+message issue
+
+Issuer (State,Authority) issues message  or other record in form of machine
+readable format (json,xml) with predefined structure, that consists of
+payload (message) and envelope.  The cryptographic digest algorithm of
+payload and identification of issuer in form of internet domain name is
+saved as envelope.  Whole message is encoded in machine readable
+presentation ie 2d barcode and can be printed or saved electronically. 
+Issuer publishes digest in DNS system to allow validation.
+
+message validation
+
+Message is scanned (phone,tablet,pc) decoded and parsed.  Issuer is checked
+against list of authorized issuers (a single TLD ie "covid.pass").  DNS
+query is constructed from payload digest and issuer identification
+according to recipe specified in envelope.  DNS is queried and response is
+interpreted.
+
+load balancing, caching
+
+dns subdomain hierarchy and/or DNS caching  can be implemented to address
+load issues to issuer's authoritative servers. 
+
+example
+
+payload: 
+
+{
+ "idtype": "passport", 
+ "surname": "Novak", 
+ "name": "Jan", 
+ "validto": "2100-01-01", 
+ "idnumber": "123456789", 
+ "validfrom": "1999-01-01", 
+ "type": "vaccination", 
+ "vaccine": "Vaccine A"
+}
+
+
+message:
+
+{
+ "msg": "{\"idtype\": \"passport\", \"surname\": \"Novak\", \"name\": \"Jan\", \"validto\": \"2100-01-01\", \"idnumber\": \"123456789\", \"validfrom\": \"1999-01-01\", \"type\": \"vaccination\", \"vaccine\": \"Vaccine A\"}", 
+ "hdr": {
+  "algo": "sha256", 
+  "issuer": "a4.e3.cz.covid.pass"
+ }
+}
+
+(a4.e3 = load balancing subdomain)
+
+
+final, qr-code encoded message:
+
+
+                                                                   
+   ▄▄▄▄▄▄▄   ▄▄▄   ▄       ▄ ▄▄ ▄▄▄▄  ▄▄  ▄ ▄▄▄   ▄▄▄ ▄▄ ▄▄▄▄▄▄▄   
+   █ ▄▄▄ █ ▀ █ █▀▀▀█▀█▄▄▄▀▀█▄▀▀▄ █ ▄██  ▄▀▄█▀  ▄ ▄▀▀ ▄██ █ ▄▄▄ █   
+   █ ███ █ ▀█▀ ▄ ▄█▀█▀▀▀█▄ ▄▀▄ ██▄▄▄   ▀█ ▀▄ ▄ ▄▄ ▀▀▄█▄▀ █ ███ █   
+   █▄▄▄▄▄█ █ █▀▄ █▀▄ █ █ █▀█▀█▀█ ▄ █▀█ ▄ █▀▄ ▄ ▄ █ █ █ ▄ █▄▄▄▄▄█   
+   ▄▄▄▄▄ ▄▄▄▄▄ ▀▀ ▀▄▀█  ▀ ▀ ▄█ █▄▄▄██▄█▄  █▀▄█▄▀█▄ ▄▀▀ ▄▄ ▄ ▄ ▄    
+      ▄▀▀▄▀▄█▀▀ ▀▀▀ ▀▀▀██▀██▄ ▄▀▀▄ ▀▄▄███ ▀▄█▀   ▄▄▀ ▄   ▀█▀▄▀ ▄   
+   ▄▀ ▀█▄▄▀█▀ ▀   ▀▀ ▄▀██▀▄█▄▀▀  ▀▀▀█ ▄▄▀█ ▀▀▄▀▀▀▀ ▄  ██▀██▀█▄▀    
+   █▄▀▀█ ▄▀▀█▀▄█ ▀▄▄ ▄▀ ▀█▀█ ▀▄█ ▀█   ▄▄▀▄▀█ ▀ ▀ ▄ ██ █▄█▀ ▀▀ ▄▄   
+   ▄ ▄▄▀▄▄▀▄███▀▀  ▀ ▄▄▀▀█ █ ▀ ▄ ▀  ▄█▄▄ ▄  ▀█▄▀▄▀▄▄  ▀▀▀▄ ▀█▄▄▀   
+   █▄▄█▀▀▄▄▀▄   █▄▀ ▀▄█ █ ▀ ▄█▀   ▀▀▄▄▀▄ ▄▀ ▀▀▄██▄ █▀▄ ▄ ▀ ▀ ▄▀▄   
+   ▄▄ ▄▀█▄▄ █ ▄█▀▄█▄ ▄▀█▀▀█ ▄▀   ▀▀▀▄ ▀▄█▀▄▀ █ ▀█  ▄ ▄▀█▄▀▄▀▄▄ █   
+   ▀ █ █ ▄ █▄▀▀▀▄ █ ▄   ██▀▀ ▀████ ▀█▄ ▄▀▄   ▀▄▄▀▄ █ ▄▀ ▀▀▀▄█ ██   
+   █▀▀█▄▄▄ ▀▀█▀▄▄▀▀▄▄ █▀   ▀▀ ▄▄▄▀▄▄▄██▄▀▀█▀▄▀█▀▄▄██ ▄ ▄ ▀▄▀█▄ █   
+   █▀▄▀ ▀▄█▄▀▄ █ █▀  █▄ ▀█▀▀▀  █ ▀█▀▄▄▀▄ ▄█▀█▀ ▀▄▄ █▀▄▄ ▄▀▀▀█▄█▄   
+    ▀█ ▄█▄█▄▀▀█▄▄▄█▄▄█ ▄█ ▀▀█ ▄▄████▄▀█▄▄▄▀▀ █ ▀▀▄▀▄▀▀ ▄██▄█ ▄▀▀   
+    ▄▄▀█ ▄ ██▀█▀▄█  ▀▀▀▄█▀ █▄███ ▄ ██▄█ █▄▀ ██ ▀ ▄ █ ▄▄█ ▄ █ ▀▄▄   
+    ▀▀▄█▄▄▄██▀▄▀ ██  ▄ ▄▄ █▄  ██▄▄▄█  ▄▄▀▀ ▀▄▄▄▀█▄█▄█ ██▄▄▄█▀▄▀█   
+    ▄▀ █▀▄▄█ █ ▀▄ ▄█ ▄█▄ ▄▄█▄▀▄█▀█ ▄  ▀▄ ▄█▀▀▀▀▄▀▄▀▀█ ▄▄▄█   █▀▄   
+   ▄▀██  ▄▀   ▄ █ ▄█ ▄█▀▀▀ ▀▀ ▄▄ █ ▄▄█ ▄ ▄▀▀ ▀█ ▀  ▄▀▀▄▀ ▄ ▄█▄█▀   
+   ▄ ▀ ██▄ █  ▄▄▄█▀▄▀▄█ ▀▀ █▄█▄  ▄▄█ ▄▄▀▀▄▀█▀▀▀ █▄ █ ▄▄▄▄█  █  ▄   
+   ▀█▀███▄███▄█▄▄█▀█▀█▀ ▀ █ ▄█▀ ▄█ ▄▀ █▄ ▄█▀▄▀ ▀▀  ▄▄▀▄ ▀▀▀██▄▄▀   
+   ▄█  ▀ ▄▄▀ ▄ ▀▀ █▄█▀▀██▀▀▀ ▄█▀██▄ ▄▄ ▄█▄▀▄█▀▄▄▄▄  ▀▄▄▄▄█▀ ▄▄ ▄   
+   ██▀█ █▄▄▄▄▀ ██▄█▄ █▀██  ▀█▀▄  ▄█ █▄▄▄ █▀▀▀▄█▀▀▄▀▄ ▄▄▀  ██▄▄▀█   
+   ▄  █ █▄▄▄▀▀  ▀▀▄▄ ▄  ▀█ ▀▀ ▄▄█▄█▄▀▄▀▄ ▄▄▄ ▀█  ▄▀█▄▄▄  ▄█ █ ▄▄   
+   ▀ ▀▄  ▄█▄ ▀▄ █▀▀▀▄█ ▄▀█ █▄ ▀▀▄▄█ ▄▀▄▄   ▀█ ▄▀███▄▀▀▄ ▄ ▀█▀▄ ▄   
+    ▀█▄▄▄▄████ ▀▀█▀ ▀▀▀▄█ ▀ ▀ ▄█ ▄▄▄█▄▀██  █▀▀▀▀█▄▄█ ▄▀▀█▄ ▄█▄ ▄   
+   ███▄▀ ▄ ▄▄▄▄ ▄ ▀▄ ▄ ▄  █▄▄ █▄▄█▄▄█ ███ █▀▄█▀▀ ▀ ▄  ▄▄██▄█▀▄▀▀   
+   ▄▄▄▄▄▄▄ █▄▄ ▀██▄ ▄ █ ▀▀██   █ ▄ █▄▄ ▄█▄▀ ▄▀  ▀▄ █ ▄██ ▄ ██▄ ▄   
+   █ ▄▄▄ █ ▄▀    ██▄▄ █▀▀▀ ▀▀ ██▄▄▄█ ▀ ▄▀▄   ██ ▀▄▀▄▀ ██▄▄▄█▄▄ ▄   
+   █ ███ █ █ ▄██▄ █  █▄ ▄▀ ██▄ ▀█▀ ▀▄▄▄▀▀▄▀█▀▀  ▄▄ ▄█▄▄▀▀▄█ ▀  █   
+   █▄▄▄▄▄█ █▄▄██ ▄▄▀▄▄ ▄█ ▀   █▀▀▄▀▀▀ ▄▄▀█▀▀ ▀▄▀  ▀▄ ▄▄  ▀▀ ▄▄▄█   
+                                                                                                                                      
+
+
+
+decoded msg: {"idtype": "passport", "surname": "Novak", "name": "Jan", "validto": "2100-01-01", "idnumber": "123456789", "validfrom": "1999-01-01", "type": "vaccination", "vaccine": "Vaccine A"}
+
+sha256 digest of msg: a67ad35ed3b3a1995032d1c355de26f9ac84a2b385907e09806f55e181461a3a
+
+validation DNS query: a67ad35ed3b3a1995032d1c355de26f9ac84a2b385907e09806f55e181461a3a.a4.e3.cz.covid.pass
+
