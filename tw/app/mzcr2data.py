@@ -78,6 +78,8 @@ modifiedO=data['modified'].split('T');
 
 for r in data['data']:
 #    print(r)
+    if r['kraj_nuts_kod']== '':
+      continue
     if not r['datum'] == curdate:
      ockovaniT[curdate]=deepcopy(ockovani)
      curdate=r['datum']
@@ -150,7 +152,6 @@ for r in data['data']:
 
 prijemT[curdate]=prijem
 
-
 kraj['CZ']='Celkem ČR'
 
 thead="<tr><th data-sorter='false'></th>"
@@ -218,6 +219,7 @@ with open("../vakcinace-po-krajich.html", "w") as output:
 #File = open("../data/kraj.min.json", "w")
 #File.write(json.dumps(kraj,ensure_ascii=False,indent=1))
 #File.close()
+
 File = open("../data/ecdcT.min.json", "w")
 File.write(json.dumps(ecdcT,ensure_ascii=False,indent=1))
 File.close()
@@ -227,6 +229,8 @@ File.close()
 File = open("../data/prijemT.min.json", "w")
 File.write(json.dumps(prijemT,ensure_ascii=False,indent=1))
 File.close()
+
+
 
 print((modifiedO[0]==modifiedP[0]))
 
