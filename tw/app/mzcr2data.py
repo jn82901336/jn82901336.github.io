@@ -53,7 +53,6 @@ for r in data['records']:
    dt='2020-12-26'
   
   vakcina=ecdc2cz[r['Vaccine']]
-   
   if not dt in ecdcT:
    ecdcT[dt]={}
   ecdcT[dt][vakcina]=r['NumberDosesReceived']
@@ -62,7 +61,6 @@ for r in data['records']:
    ecdc[vakcina]=0;
   ecdc[vakcina]+=r['NumberDosesReceived']
   
-
   
 
 try: 
@@ -84,7 +82,7 @@ for r in data['data']:
      ockovaniT[curdate]=deepcopy(ockovani)
      curdate=r['datum']
     
-    vakcina=r['vakcina'].replace('COVID-19 Vaccine ','')
+    vakcina=r['vakcina'].replace('COVID-19 Vaccine ','').replace('VAXZEVRIA','AstraZeneca')
 
     if not r['datum'] in ockovaniT:
      ockovaniT[r['datum']]={}
