@@ -24,7 +24,7 @@ locale.setlocale(locale.LC_ALL, 'cs_CZ.UTF-8')
 ecdc2cz={
 'COM': "Comirnaty",
 'MOD': "Moderna",
-'AZ':  "AstraZeneca",
+'AZ':  "VAXZEVRIA",
 }
 ockovani={'CZ': {}}
 ockovaniT={}
@@ -82,7 +82,8 @@ for r in data['data']:
      ockovaniT[curdate]=deepcopy(ockovani)
      curdate=r['datum']
     
-    vakcina=r['vakcina'].replace('COVID-19 Vaccine ','').replace('VAXZEVRIA','AstraZeneca')
+    vakcina=r['vakcina'].replace('COVID-19 Vaccine ','')
+    #.replace('VAXZEVRIA','AstraZeneca')
 
     if not r['datum'] in ockovaniT:
      ockovaniT[r['datum']]={}
