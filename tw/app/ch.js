@@ -69,35 +69,30 @@ function graf(co){
   });
  }
 
- 
   
  var TlastP=TlastO=TlastE=null;
+ var vcount=vakciny.length;
  $.each(Object.keys(data), function (k,dt){
   $.each(vakciny, function (i,vakcina){
     cnt=(prijemT?.[dt]?.[co]?.[vakcina]) ? prijemT[dt][co][vakcina] : lastP[vakcina];
-    if (vakcina=='Comirnaty') chart.data.datasets[0]['data'].push(cnt);
-    if (vakcina=='Moderna') chart.data.datasets[1]['data'].push(cnt);
-    if (vakcina=='AstraZeneca') chart.data.datasets[2]['data'].push(cnt);
+    var index=vakciny.indexOf(vakcina);
+    chart.data.datasets[index]['data'].push(cnt)
     lastP[vakcina]=cnt;
     TlastP+=cnt;
 
     cnt=(ockovaniT?.[dt]?.[co]?.[vakcina]) ? ockovaniT[dt][co][vakcina] : lastO[vakcina];
-    if (vakcina=='Comirnaty') chart.data.datasets[3]['data'].push(cnt);
-    if (vakcina=='Moderna') chart.data.datasets[4]['data'].push(cnt);
-    if (vakcina=='AstraZeneca') chart.data.datasets[5]['data'].push(cnt);
+    chart.data.datasets[index+vcount]['data'].push(cnt);
     lastO[vakcina]=cnt;
     TlastO+=cnt;
     
     if(co=='CZ'){
      cnt=(ecdcT?.[dt]?.[vakcina]) ? lastE[vakcina]+ecdcT[dt][vakcina] : lastE[vakcina];
-     if (vakcina=='Comirnaty') chart.data.datasets[8]['data'].push(cnt);
-     if (vakcina=='Moderna') chart.data.datasets[9]['data'].push(cnt);
-     if (vakcina=='AstraZeneca') chart.data.datasets[10]['data'].push(cnt);
+     chart.data.datasets[index+vcount+vcount+2]['data'].push(cnt);
      lastE[vakcina]=cnt;
      TlastE+=cnt;
     }
   }); //each vakciny
-  chart.data.datasets[6]['data'].push(TlastP-TlastO);
+  chart.data.datasets[2*vcount]['data'].push(TlastP-TlastO);
   TlastP=TlastO=TlastE=0;
  }); //each data
   
@@ -105,7 +100,7 @@ function graf(co){
  chart.scales['yP'].options.ticks.max=
  Object.values(lastP).reduce(function(a, b) {return a + b;});
 */
- chart.data.datasets[7]['data']= movingAvg(chart.data.datasets[6]['data'], 7);
+ chart.data.datasets[2*vcount+1]['data']= movingAvg(chart.data.datasets[2*vcount]['data'], 7);
  chart.update();
 }
 
