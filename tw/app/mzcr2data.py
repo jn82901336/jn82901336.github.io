@@ -26,13 +26,13 @@ ecdc2cz={
 'MOD': "Moderna",
 'AZ':  "VAXZEVRIA",
 }
-ockovani={'CZ': {}}
+ockovani={'CZ0': {}}
 ockovaniT={}
 ecdcT={}
 ecdc={}
 curdate=''
 kraj={}
-prijem={'CZ': {}}
+prijem={'CZ0': {}}
 prijemT={}
 thead=''
 tbody=''
@@ -93,9 +93,9 @@ for r in data['data']:
      kraj[r['kraj_nuts_kod']]=r['kraj_nazev'].replace('kraj','').replace('Kraj','').replace('Hlavní město','')
 
     try:
-       ockovani['CZ'][vakcina]+=r['celkem_davek']
+       ockovani['CZ0'][vakcina]+=r['celkem_davek']
     except KeyError:
-       ockovani['CZ'][vakcina]=r['celkem_davek']
+       ockovani['CZ0'][vakcina]=r['celkem_davek']
 
          
     try:
@@ -130,9 +130,9 @@ for r in data['data']:
     
     if r['akce'] == 'Příjem':
      try:
-        prijem['CZ'][vakcina]+=r['pocet_davek']
+        prijem['CZ0'][vakcina]+=r['pocet_davek']
      except KeyError:
-        prijem['CZ'][vakcina]=r['pocet_davek']
+        prijem['CZ0'][vakcina]=r['pocet_davek']
          
      try:
         prijem[r['kraj_nuts_kod']][vakcina]+=r['pocet_davek']
@@ -151,12 +151,12 @@ for r in data['data']:
 
 prijemT[curdate]=prijem
 
-kraj['CZ']='Celkem ČR'
+kraj['CZ0']='Celkem ČR'
 
-thead="<tr><th data-sorter='false'></th>"
+thead="<tr><th data-sorter='false'><input type='checkbox' id='pc'><label for='pc'>přepočet na 100tis obyvatel</label></th>"
 thead2="<tr><th data-sorter='false'><input data-column='all' class='search tablesorter-filter' type='search' name='search'></th>"
 
-for i,(vakcina) in enumerate(ockovani['CZ']):
+for i,(vakcina) in enumerate(ockovani['CZ0']):
     thead += f"<th colspan='3' data-sorter='false'>{vakcina}</th>"
     thead2+= "<th data-filter='false'>dodáno</th><th data-filter='false'>vyočkováno</th><th data-filter='false'>%</th>"
 thead+="<th colspan='3' data-sorter='false'>Celkem</th></tr>\n"+thead2+"<th data-filter='false'>dodáno</th><th data-filter='false'>vyočkováno</th><th data-filter='false'>%</th></tr>\n"
@@ -165,20 +165,20 @@ for kod,kraj in kraj.items():
    tbody += f"<tr id='{kod}'><th>{kraj}</th>"
    krajTO=0
    krajTP=0
-   for vakcina,tmp in ockovani['CZ'].items():
-     tbody+="<td>"+str(prijem[kod][vakcina])+"</td><td>"+str(ockovani[kod][vakcina])+"</td><td>"+str(int(round(ockovani[kod][vakcina]*100/prijem[kod][vakcina],1)))+"%</td>\n"
+   for vakcina,tmp in ockovani['CZ0'].items():
+     tbody+="<td cnt=''>"+str(prijem[kod][vakcina])+"</td><td cnt=''>"+str(ockovani[kod][vakcina])+"</td><td>"+str(int(round(ockovani[kod][vakcina]*100/prijem[kod][vakcina],1)))+"%</td>\n"
      krajTO+=ockovani[kod][vakcina]
      krajTP+=prijem[kod][vakcina]
 
-   tbody+="<td>"+str(krajTP)+"</td><td>"+str(krajTO)+"</td><td>"+str(int(round(krajTO*100/krajTP,1)))+"%</td></tr>\n"  
+   tbody+="<td cnt=''>"+str(krajTP)+"</td><td cnt=''>"+str(krajTO)+"</td><td>"+str(int(round(krajTO*100/krajTP,1)))+"%</td></tr>\n"  
 
 free=0
 freeCS=0
 cs=''
-for vakcina,cnt in prijem['CZ'].items():
+for vakcina,cnt in prijem['CZ0'].items():
 #   print(vakcina,cnt)
    free+=cnt
-   free-=ockovani['CZ'][vakcina]
+   free-=ockovani['CZ0'][vakcina]
    if ecdc[vakcina]-cnt > 0:
     freeCS+=ecdc[vakcina]-cnt
     cs+=vakcina+": "+str(ecdc[vakcina]-cnt)+" "

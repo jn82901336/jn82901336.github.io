@@ -1,3 +1,19 @@
+function pc_toggle(){
+ pc=$('#pc').prop('checked')
+ $('td[cnt]').each(function(){
+  if (! pc){  
+   $(this).html($(this).attr('cnt'));
+  }
+  else{
+   var kraj=$(this).parent().attr('id');
+   var cntpc=Math.round(($(this).attr('cnt')*100000)/population[kraj]);
+   $(this).html(cntpc);
+  }
+ });
+ $("#t").trigger("updateAll", [ true ]); 
+ graf(last_graph);
+}
+
 /**
     * https://stackoverflow.com/a/39263992
     */
@@ -34,9 +50,10 @@
     }
 
 function graf(co){
+ last_graph=co;
  chart.data.datasets = [];
  chart.options.title.text=$('#'+co+' th').html();
-
+ var pc_koef = ( pc ) ? population[co]/100000 : 1;
  var color_index=0;
  $.each(vakciny, function (i,vakcina){
      var dv = (dataset_visibility[color_index]) ? false :  true;
@@ -60,7 +77,7 @@ function graf(co){
  chart.data.datasets.push({hidden: dv, label: 'ø 7 dní', data: [], pointRadius:0 , fill: false, yAxisID: 'yP'});
  color_index++;
  
- if (co == 'CZ'){
+ if (co == 'CZ0'){
   $.each(vakciny, function (i,vakcina){
      var dv = (dataset_visibility[color_index]) ? false :  true;
      chart.data.datasets.push({hidden: dv, label: vakcina+' CS', data: [], yAxisID: 'yP', fill: false, backgroundColor: default_colors[color_index], borderColor: default_colors[color_index]});
@@ -74,19 +91,19 @@ function graf(co){
  var vcount=vakciny.length;
  $.each(Object.keys(data), function (k,dt){
   $.each(vakciny, function (i,vakcina){
-    cnt=(prijemT?.[dt]?.[co]?.[vakcina]) ? prijemT[dt][co][vakcina] : lastP[vakcina];
+    cnt=(prijemT?.[dt]?.[co]?.[vakcina]) ? Math.round(prijemT[dt][co][vakcina]/pc_koef) : lastP[vakcina];
     var index=vakciny.indexOf(vakcina);
     chart.data.datasets[index]['data'].push(cnt)
     lastP[vakcina]=cnt;
     TlastP+=cnt;
 
-    cnt=(ockovaniT?.[dt]?.[co]?.[vakcina]) ? ockovaniT[dt][co][vakcina] : lastO[vakcina];
+    cnt=(ockovaniT?.[dt]?.[co]?.[vakcina]) ? Math.round(ockovaniT[dt][co][vakcina]/pc_koef) : lastO[vakcina];
     chart.data.datasets[index+vcount]['data'].push(cnt);
     lastO[vakcina]=cnt;
     TlastO+=cnt;
     
-    if(co=='CZ'){
-     cnt=(ecdcT?.[dt]?.[vakcina]) ? lastE[vakcina]+ecdcT[dt][vakcina] : lastE[vakcina];
+    if(co=='CZ0'){
+     cnt=(ecdcT?.[dt]?.[vakcina]) ? Math.round(lastE[vakcina]+ecdcT[dt][vakcina]/pc_koef) : lastE[vakcina];
      chart.data.datasets[index+vcount+vcount+2]['data'].push(cnt);
      lastE[vakcina]=cnt;
      TlastE+=cnt;
@@ -124,7 +141,7 @@ function addOckovani(d){
       if (el==gend) return false;
     });
 
-    vakciny=Object.keys(prijemT[ Object.keys(prijemT)[Object.keys(prijemT).length - 1]]['CZ']);
+    vakciny=Object.keys(prijemT[ Object.keys(prijemT)[Object.keys(prijemT).length - 1]]['CZ0']);
     vCnt=vakciny.length;
 
     var orig = Chart.defaults.global.legend.onClick;
@@ -214,7 +231,7 @@ function addOckovani(d){
          }
         }]// plugins 
     });
-    graf('CZ');
+    graf('CZ0');
 }//addOckovani
 
 var vCnt=0;
@@ -229,6 +246,9 @@ var vakciny={};
 var dataset_visibility=[0,0,0,0,0,0,1];
 var tden=['Ne','Po','Út','St','Čt','Pá','So']
 var gend='';
+var pc=false;
+var last_graph;
+var population={};
 var default_colors = ['#3366CC','#994499','#109618','#0099C6','#DD4477','#22AA99','','','#6633CC','#E67300', '#66AA00',  '#FF9900', '#B82E2E','#316395','#DC3912','#AAAA11','#3B3EAC','#8B0707','#329262','#5574A6','#3B3EAC','#990099'] ;
 $(function () {
  gend=new Date(new Date($('#dockovani').html())-3600).toISOString().split('T')[0];
@@ -236,7 +256,7 @@ $(function () {
  var table = $("#t").tablesorter({
   widgets: ["filter", "stickyHeaders","zebra","staticRow"],
    widgetOptions: {
-     staticRow_class: "#CZ",
+     staticRow_class: "#CZ0",
      filter_columnFilters: false,
     }
   
@@ -249,5 +269,14 @@ $(function () {
  $('#save').click(function(){
       $('#save').attr('href',chart.toBase64Image());
  });
+ 
+ $.getJSON('data/population.json', function(data){
+  population=data;
+  $('#pc').click(function (){pc_toggle();});
+  $('td[cnt]').each(function(){
+   $(this).attr('cnt',$(this).html());
+  })
+ });
 
+ 
 });
