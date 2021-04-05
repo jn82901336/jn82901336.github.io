@@ -127,7 +127,7 @@ function pcgraf(){
 
 
 
- var dt='2021-04-04';
+ var dt=gend;
  $.each(Object.keys(kraje), function (k,co){
   var pc_koef = ( pc ) ? kraje[co]['pop']/100000 : 1;
   kraje[co]['totP']=0;
@@ -139,17 +139,17 @@ function pcgraf(){
     var index=vakciny.indexOf(vakcina);
     chart.data.datasets[index]['data'].push(cnt)
     lastP[vakcina]=cnt;
-    kraje[co]['totP']+=cnt;
+    kraje[co]['totP']+=prijemT[dt][co][vakcina];
 
     cnt=(ockovaniT?.[dt]?.[co]?.[vakcina]) ? Math.round(ockovaniT[dt][co][vakcina]/pc_koef) : lastO[vakcina];
     chart.data.datasets[index+vcount]['data'].push(cnt);
     lastO[vakcina]=cnt;
-    kraje[co]['totO']+=cnt;
+    kraje[co]['totO']+=ockovaniT[dt][co][vakcina];
     
   }); //each vakciny
    
-   chart.data.datasets[2*vcount]['data'].push(kraje[co]['totP']);
-   chart.data.datasets[2*vcount+1]['data'].push(kraje[co]['totO']);
+   chart.data.datasets[2*vcount]['data'].push(Math.round(kraje[co]['totP']/pc_koef));
+   chart.data.datasets[2*vcount+1]['data'].push(Math.round(kraje[co]['totO']/pc_koef));
 
  }); //each kraje
 
