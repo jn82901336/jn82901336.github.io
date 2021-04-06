@@ -381,7 +381,10 @@ $(function () {
  $.tablesorter.filter.bindSearch(table, $('.search') );   
 
  $.getJSON('data/prijemT.min.json', addPrijem);
- $('tr[id^=CZ]').click(function(i){graf($(this).attr('id'))});
+ $('tr[id^=CZ]').click(function(i){
+  chart.destroy();
+  graf($(this).attr('id'))
+  });
  $('#save').click(function(){
       $('#save').attr('href',chart.toBase64Image());
  });
