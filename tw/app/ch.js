@@ -358,7 +358,7 @@ var chart;
 var chartconfig;
 var data={};
 var vakciny={};
-var dataset_visibility=[0,0,0,0,0,0,1];
+var dataset_visibility=[0,0,0,0,0,0,0,1];
 var tden=['Ne','Po','Út','St','Čt','Pá','So']
 var gend='';
 var pc=false;
