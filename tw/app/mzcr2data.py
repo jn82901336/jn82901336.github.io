@@ -165,8 +165,10 @@ for kod,kraj in kraj.items():
    tbody += f"<tr id='{kod}'><th>{kraj}</th>"
    krajTO=0
    krajTP=0
-   for vakcina,tmp in ockovani['CZ0'].items():
-     tbody+="<td cnt=''>"+str(prijem[kod][vakcina])+"</td><td cnt=''>"+str(ockovani[kod][vakcina])+"</td><td>"+str(int(round(ockovani[kod][vakcina]*100/prijem[kod][vakcina],1)))+"%</td>\n"
+   for vakcina,tmp in prijem['CZ0'].items():
+     tbody+="<td cnt=''>"+str(prijem[kod][vakcina])+"</td>"
+     tbody+="<td cnt=''>"+str(ockovani[kod][vakcina])+"</td>"
+     tbody+="<td>"+str(int(round(ockovani[kod][vakcina]*100/prijem[kod][vakcina],1)))+"%</td>\n"
      krajTO+=ockovani[kod][vakcina]
      krajTP+=prijem[kod][vakcina]
 
