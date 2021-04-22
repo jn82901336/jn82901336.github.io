@@ -25,6 +25,7 @@ ecdc2cz={
 'COM': "Comirnaty",
 'MOD': "Moderna",
 'AZ':  "VAXZEVRIA",
+'JANSS': "Janssen",
 }
 ockovani={'CZ0': {}}
 ockovaniT={}
