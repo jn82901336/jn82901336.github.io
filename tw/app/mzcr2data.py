@@ -75,9 +75,8 @@ except Exception as e:
 
 #modifiedO = datetime.fromisoformat(data['modified']).replace(tzinfo=None)
 modifiedO=data['modified'].split('T');
-
-for r in data['data']:
-#    print(r)
+#for r in data['data']:
+for r in sorted(data['data'], key=lambda x: x['datum'], reverse=False):
     if r['kraj_nuts_kod']== '':
       continue
     if not r['datum'] == curdate:
@@ -118,7 +117,7 @@ except Exception as e:
 #modifiedP = datetime.fromisoformat(data['modified']).replace(tzinfo=None)
 modifiedP=data['modified'].split('T');
 curdate=''
-for r in data['data']:
+for r in sorted(data['data'], key=lambda x: x['datum'], reverse=False):
     if not r['datum'] == curdate:
       prijemT[curdate]=deepcopy(prijem)
       curdate=r['datum']
@@ -129,7 +128,7 @@ for r in data['data']:
     if not r['kraj_nuts_kod'] in prijem:
       prijem[r['kraj_nuts_kod']]={vakcina: 0 }
 
-    elif r['cilovy_kraj_kod'] != '' and not r['cilovy_kraj_kod'] in prijem:
+    if r['cilovy_kraj_kod'] != '' and not r['cilovy_kraj_kod'] in prijem:
       prijem[r['cilovy_kraj_kod']]={vakcina: 0 }
     
     if r['akce'] == 'Příjem':
@@ -154,7 +153,6 @@ for r in data['data']:
 
 
 prijemT[curdate]=prijem
-
 kraj['CZ0']='Celkem ČR'
 
 thead="<tr><th data-sorter='false'><input type='checkbox' id='pc'><label for='pc'>přepočet na 100tis obyvatel</label></th>"
