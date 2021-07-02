@@ -149,8 +149,10 @@ for r in sorted(data['data'], key=lambda x: x['datum'], reverse=False):
      except KeyError:
        prijem[r['cilovy_kraj_kod']][vakcina]=r['pocet_davek']
      
-     prijem[r['kraj_nuts_kod']][vakcina]-=r['pocet_davek']      
-
+     try:
+       prijem[r['kraj_nuts_kod']][vakcina]-=r['pocet_davek']      
+     except KeyError:
+       prijem[r['kraj_nuts_kod']][vakcina]=-r['pocet_davek']
 
 prijemT[curdate]=prijem
 kraj['CZ0']='Celkem ČR'
