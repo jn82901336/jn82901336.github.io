@@ -61,8 +61,10 @@ for r in data['records']:
   
   if not vakcina in ecdc:
    ecdc[vakcina]=0;
-  ecdc[vakcina]+=r['NumberDosesReceived']
-  
+  try:
+    ecdc[vakcina]+=r['NumberDosesReceived']
+  except Exception as e:
+    pass
   
 
 try: 
