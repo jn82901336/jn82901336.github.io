@@ -7,11 +7,11 @@
 <meta name="twitter:card" content="summary" />
 <meta name="twitter:site" content="@jn82901336" />
 <meta name="twitter:creator" content="@jn82901336" />
-<meta name="twitter:title" content="4205626 nevyočkováno" />
+<meta name="twitter:title" content="4155088 nevyočkováno" />
 <meta name="twitter:url" content="https://jn82901336.github.io/tw/vakcinace-po-krajich.html">
 <meta name="twitter:image" content="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4f/Gnome-x-office-spreadsheet.svg/1024px-Gnome-x-office-spreadsheet.svg.png">
 
-<meta name="twitter:description" content="COVID-19, stav očkování 16 listopadu 2021"/>
+<meta name="twitter:description" content="COVID-19, stav očkování 17 listopadu 2021"/>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js" integrity="sha256-t9UJPrESBeG2ojKTIcFLPGF7nHi2vEc7f5A2KpH/UBU=" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@0.7.0"></script>
@@ -39,90 +39,105 @@ thead th {
 </style>
 </head>
 <body>
-<h3>Nevyočkováno: kraje 1189347 + centrální sklad 3016279 = 4205626 dávek </h3>
-Centrální sklad: Comirnaty: 1851104 Spikevax: ? VAXZEVRIA: 618730 Janssen: 546445 
+<h3>Nevyočkováno: kraje 1142409 + centrální sklad 3012679 = 4155088 dávek </h3>
+Centrální sklad: Comirnaty: 1849154 Spikevax: ? VAXZEVRIA: 618730 Janssen: 544795 SPIKEVAX: ? 
 <table id='t'>
 <thead>
-<tr><th data-sorter='false'><input type='checkbox' id='pc'><label for='pc'>přepočet na 100tis obyvatel</label></th><th colspan='3' data-sorter='false'>Comirnaty</th><th colspan='3' data-sorter='false'>Spikevax</th><th colspan='3' data-sorter='false'>VAXZEVRIA</th><th colspan='3' data-sorter='false'>Janssen</th><th colspan='3' data-sorter='false'>Celkem</th></tr>
-<tr><th data-sorter='false'><input data-column='all' class='search tablesorter-filter' type='search' name='search'></th><th data-filter='false'>dodáno</th><th data-filter='false'>vyočkováno</th><th data-filter='false'>%</th><th data-filter='false'>dodáno</th><th data-filter='false'>vyočkováno</th><th data-filter='false'>%</th><th data-filter='false'>dodáno</th><th data-filter='false'>vyočkováno</th><th data-filter='false'>%</th><th data-filter='false'>dodáno</th><th data-filter='false'>vyočkováno</th><th data-filter='false'>%</th><th data-filter='false'>dodáno</th><th data-filter='false'>vyočkováno</th><th data-filter='false'>%</th></tr>
+<tr><th data-sorter='false'><input type='checkbox' id='pc'><label for='pc'>přepočet na 100tis obyvatel</label></th><th colspan='3' data-sorter='false'>Comirnaty</th><th colspan='3' data-sorter='false'>SPIKEVAX</th><th colspan='3' data-sorter='false'>VAXZEVRIA</th><th colspan='3' data-sorter='false'>Janssen</th><th colspan='3' data-sorter='false'>Spikevax</th><th colspan='3' data-sorter='false'>Celkem</th></tr>
+<tr><th data-sorter='false'><input data-column='all' class='search tablesorter-filter' type='search' name='search'></th><th data-filter='false'>dodáno</th><th data-filter='false'>vyočkováno</th><th data-filter='false'>%</th><th data-filter='false'>dodáno</th><th data-filter='false'>vyočkováno</th><th data-filter='false'>%</th><th data-filter='false'>dodáno</th><th data-filter='false'>vyočkováno</th><th data-filter='false'>%</th><th data-filter='false'>dodáno</th><th data-filter='false'>vyočkováno</th><th data-filter='false'>%</th><th data-filter='false'>dodáno</th><th data-filter='false'>vyočkováno</th><th data-filter='false'>%</th><th data-filter='false'>dodáno</th><th data-filter='false'>vyočkováno</th><th data-filter='false'>%</th></tr>
 
 </thead>
 <tbody>
-<tr id='CZ010'><th> Praha</th><td cnt=''>2436138</td><td cnt=''>2044462</td><td>83%</td>
-<td cnt=''>166830</td><td cnt=''>175197</td><td>105%</td>
-<td cnt=''>13380</td><td cnt=''>98787</td><td>738%</td>
-<td cnt=''>61175</td><td cnt=''>67500</td><td>110%</td>
-<td cnt=''>2677523</td><td cnt=''>2385946</td><td>89%</td></tr>
-<tr id='CZ051'><th>Liberecký </th><td cnt=''>443892</td><td cnt=''>423492</td><td>95%</td>
-<td cnt=''>14500</td><td cnt=''>43313</td><td>298%</td>
-<td cnt=''>6820</td><td cnt=''>31169</td><td>457%</td>
-<td cnt=''>2095</td><td cnt=''>8610</td><td>411%</td>
-<td cnt=''>467307</td><td cnt=''>506584</td><td>108%</td></tr>
-<tr id='CZ064'><th>Jihomoravský </th><td cnt=''>1315992</td><td cnt=''>1192738</td><td>90%</td>
-<td cnt=''>18480</td><td cnt=''>100764</td><td>545%</td>
-<td cnt=''>6730</td><td cnt=''>93804</td><td>1393%</td>
-<td cnt=''>36885</td><td cnt=''>46259</td><td>125%</td>
-<td cnt=''>1378087</td><td cnt=''>1433565</td><td>104%</td></tr>
-<tr id='CZ042'><th>Ústecký </th><td cnt=''>779124</td><td cnt=''>757987</td><td>97%</td>
-<td cnt=''>45930</td><td cnt=''>62390</td><td>135%</td>
-<td cnt=''>22270</td><td cnt=''>60133</td><td>270%</td>
-<td cnt=''>16060</td><td cnt=''>23532</td><td>146%</td>
-<td cnt=''>863384</td><td cnt=''>904042</td><td>104%</td></tr>
-<tr id='CZ020'><th>Středočeský </th><td cnt=''>1185396</td><td cnt=''>1089695</td><td>91%</td>
-<td cnt=''>69250</td><td cnt=''>99521</td><td>143%</td>
-<td cnt=''>42890</td><td cnt=''>120567</td><td>281%</td>
-<td cnt=''>3050</td><td cnt=''>28716</td><td>941%</td>
-<td cnt=''>1300586</td><td cnt=''>1338499</td><td>102%</td></tr>
-<tr id='CZ071'><th>Olomoucký </th><td cnt=''>555000</td><td cnt=''>539183</td><td>97%</td>
-<td cnt=''>13920</td><td cnt=''>65179</td><td>468%</td>
-<td cnt=''>7440</td><td cnt=''>52011</td><td>699%</td>
-<td cnt=''>8300</td><td cnt=''>16726</td><td>201%</td>
-<td cnt=''>584660</td><td cnt=''>673099</td><td>115%</td></tr>
-<tr id='CZ080'><th>Moravskoslezský </th><td cnt=''>1392768</td><td cnt=''>1071016</td><td>76%</td>
-<td cnt=''>58020</td><td cnt=''>112474</td><td>193%</td>
-<td cnt=''>5690</td><td cnt=''>83448</td><td>1466%</td>
-<td cnt=''>29910</td><td cnt=''>41653</td><td>139%</td>
-<td cnt=''>1486388</td><td cnt=''>1308591</td><td>88%</td></tr>
-<tr id='CZ052'><th>Královéhradecký </th><td cnt=''>622668</td><td cnt=''>539775</td><td>86%</td>
-<td cnt=''>15440</td><td cnt=''>57720</td><td>373%</td>
+<tr id='CZ010'><th> Praha</th><td cnt=''>2441454</td><td cnt=''>2051497</td><td>84%</td>
+<td cnt=''>0</td><td cnt=''>176262</td><td>0%</td>
+<td cnt=''>13380</td><td cnt=''>98798</td><td>738%</td>
+<td cnt=''>61975</td><td cnt=''>68382</td><td>110%</td>
+<td cnt=''>168950</td><td cnt=''>0</td><td>0%</td>
+<td cnt=''>2685759</td><td cnt=''>2394939</td><td>89%</td></tr>
+<tr id='CZ064'><th>Jihomoravský </th><td cnt=''>1317210</td><td cnt=''>1198540</td><td>91%</td>
+<td cnt=''>0</td><td cnt=''>101295</td><td>0%</td>
+<td cnt=''>6730</td><td cnt=''>93820</td><td>1394%</td>
+<td cnt=''>36885</td><td cnt=''>46881</td><td>127%</td>
+<td cnt=''>18480</td><td cnt=''>0</td><td>0%</td>
+<td cnt=''>1379305</td><td cnt=''>1440536</td><td>104%</td></tr>
+<tr id='CZ042'><th>Ústecký </th><td cnt=''>779124</td><td cnt=''>760095</td><td>97%</td>
+<td cnt=''>0</td><td cnt=''>62880</td><td>0%</td>
+<td cnt=''>22270</td><td cnt=''>60135</td><td>270%</td>
+<td cnt=''>16045</td><td cnt=''>23803</td><td>148%</td>
+<td cnt=''>45930</td><td cnt=''>0</td><td>0%</td>
+<td cnt=''>863369</td><td cnt=''>906913</td><td>105%</td></tr>
+<tr id='CZ051'><th>Liberecký </th><td cnt=''>443736</td><td cnt=''>424862</td><td>95%</td>
+<td cnt=''>0</td><td cnt=''>43475</td><td>0%</td>
+<td cnt=''>6820</td><td cnt=''>31171</td><td>457%</td>
+<td cnt=''>2095</td><td cnt=''>8708</td><td>415%</td>
+<td cnt=''>14500</td><td cnt=''>0</td><td>0%</td>
+<td cnt=''>467151</td><td cnt=''>508216</td><td>108%</td></tr>
+<tr id='CZ020'><th>Středočeský </th><td cnt=''>1185396</td><td cnt=''>1094605</td><td>92%</td>
+<td cnt=''>0</td><td cnt=''>100325</td><td>0%</td>
+<td cnt=''>42890</td><td cnt=''>120558</td><td>281%</td>
+<td cnt=''>3250</td><td cnt=''>29023</td><td>893%</td>
+<td cnt=''>69250</td><td cnt=''>0</td><td>0%</td>
+<td cnt=''>1300786</td><td cnt=''>1344511</td><td>103%</td></tr>
+<tr id='CZ071'><th>Olomoucký </th><td cnt=''>553656</td><td cnt=''>541475</td><td>97%</td>
+<td cnt=''>0</td><td cnt=''>65599</td><td>0%</td>
+<td cnt=''>7440</td><td cnt=''>52013</td><td>699%</td>
+<td cnt=''>7850</td><td cnt=''>16890</td><td>215%</td>
+<td cnt=''>13880</td><td cnt=''>0</td><td>0%</td>
+<td cnt=''>582826</td><td cnt=''>675977</td><td>116%</td></tr>
+<tr id='CZ080'><th>Moravskoslezský </th><td cnt=''>1392768</td><td cnt=''>1075038</td><td>77%</td>
+<td cnt=''>0</td><td cnt=''>113168</td><td>0%</td>
+<td cnt=''>5690</td><td cnt=''>83450</td><td>1466%</td>
+<td cnt=''>29910</td><td cnt=''>42127</td><td>140%</td>
+<td cnt=''>58020</td><td cnt=''>0</td><td>0%</td>
+<td cnt=''>1486388</td><td cnt=''>1313783</td><td>88%</td></tr>
+<tr id='CZ052'><th>Královéhradecký </th><td cnt=''>622668</td><td cnt=''>542053</td><td>87%</td>
+<td cnt=''>0</td><td cnt=''>57908</td><td>0%</td>
 <td cnt=''>14230</td><td cnt=''>54999</td><td>386%</td>
-<td cnt=''>1300</td><td cnt=''>12189</td><td>937%</td>
-<td cnt=''>653638</td><td cnt=''>664683</td><td>101%</td></tr>
-<tr id='CZ072'><th>Zlínský </th><td cnt=''>559074</td><td cnt=''>523976</td><td>93%</td>
-<td cnt=''>8280</td><td cnt=''>58563</td><td>707%</td>
-<td cnt=''>2170</td><td cnt=''>47743</td><td>2200%</td>
-<td cnt=''>9500</td><td cnt=''>16314</td><td>171%</td>
-<td cnt=''>579024</td><td cnt=''>646596</td><td>111%</td></tr>
-<tr id='CZ041'><th>Karlovarský </th><td cnt=''>372174</td><td cnt=''>259370</td><td>69%</td>
-<td cnt=''>12090</td><td cnt=''>22917</td><td>189%</td>
-<td cnt=''>13640</td><td cnt=''>48581</td><td>356%</td>
-<td cnt=''>2545</td><td cnt=''>7235</td><td>284%</td>
-<td cnt=''>400449</td><td cnt=''>338103</td><td>84%</td></tr>
-<tr id='CZ063'><th> Vysočina</th><td cnt=''>506022</td><td cnt=''>459579</td><td>90%</td>
-<td cnt=''>44530</td><td cnt=''>57290</td><td>128%</td>
-<td cnt=''>22370</td><td cnt=''>53750</td><td>240%</td>
-<td cnt=''>4370</td><td cnt=''>13993</td><td>320%</td>
-<td cnt=''>577292</td><td cnt=''>584612</td><td>101%</td></tr>
-<tr id='CZ053'><th>Pardubický </th><td cnt=''>481098</td><td cnt=''>459044</td><td>95%</td>
-<td cnt=''>14450</td><td cnt=''>49543</td><td>342%</td>
-<td cnt=''>1540</td><td cnt=''>41444</td><td>2691%</td>
-<td cnt=''>2545</td><td cnt=''>21155</td><td>831%</td>
-<td cnt=''>499633</td><td cnt=''>571186</td><td>114%</td></tr>
-<tr id='CZ032'><th>Plzeňský </th><td cnt=''>753744</td><td cnt=''>587429</td><td>77%</td>
-<td cnt=''>42400</td><td cnt=''>45238</td><td>106%</td>
-<td cnt=''>19780</td><td cnt=''>48426</td><td>244%</td>
-<td cnt=''>10000</td><td cnt=''>16712</td><td>167%</td>
-<td cnt=''>825924</td><td cnt=''>697805</td><td>84%</td></tr>
-<tr id='CZ031'><th>Jihočeský </th><td cnt=''>656928</td><td cnt=''>651601</td><td>99%</td>
-<td cnt=''>28610</td><td cnt=''>55159</td><td>192%</td>
+<td cnt=''>1300</td><td cnt=''>12345</td><td>949%</td>
+<td cnt=''>15540</td><td cnt=''>0</td><td>0%</td>
+<td cnt=''>653738</td><td cnt=''>667305</td><td>102%</td></tr>
+<tr id='CZ041'><th>Karlovarský </th><td cnt=''>372174</td><td cnt=''>260449</td><td>70%</td>
+<td cnt=''>0</td><td cnt=''>23004</td><td>0%</td>
+<td cnt=''>13640</td><td cnt=''>48582</td><td>356%</td>
+<td cnt=''>2545</td><td cnt=''>7480</td><td>293%</td>
+<td cnt=''>12090</td><td cnt=''>0</td><td>0%</td>
+<td cnt=''>400449</td><td cnt=''>339515</td><td>84%</td></tr>
+<tr id='CZ072'><th>Zlínský </th><td cnt=''>558336</td><td cnt=''>526397</td><td>94%</td>
+<td cnt=''>0</td><td cnt=''>58859</td><td>0%</td>
+<td cnt=''>2170</td><td cnt=''>47745</td><td>2200%</td>
+<td cnt=''>9490</td><td cnt=''>16550</td><td>174%</td>
+<td cnt=''>7910</td><td cnt=''>0</td><td>0%</td>
+<td cnt=''>577906</td><td cnt=''>649551</td><td>112%</td></tr>
+<tr id='CZ031'><th>Jihočeský </th><td cnt=''>658128</td><td cnt=''>653913</td><td>99%</td>
+<td cnt=''>0</td><td cnt=''>55324</td><td>0%</td>
 <td cnt=''>16440</td><td cnt=''>47920</td><td>291%</td>
-<td cnt=''>11290</td><td cnt=''>16733</td><td>148%</td>
-<td cnt=''>713268</td><td cnt=''>771413</td><td>108%</td></tr>
-<tr id='CZ0'><th>Celkem ČR</th><td cnt=''>12499656</td><td cnt=''>10599347</td><td>84%</td>
-<td cnt=''>814790</td><td cnt=''>1005268</td><td>123%</td>
-<td cnt=''>494870</td><td cnt=''>882782</td><td>178%</td>
-<td cnt=''>204755</td><td cnt=''>337327</td><td>164%</td>
-<td cnt=''>14014071</td><td cnt=''>12824724</td><td>91%</td></tr>
+<td cnt=''>11390</td><td cnt=''>16856</td><td>148%</td>
+<td cnt=''>28610</td><td cnt=''>0</td><td>0%</td>
+<td cnt=''>714568</td><td cnt=''>774013</td><td>108%</td></tr>
+<tr id='CZ032'><th>Plzeňský </th><td cnt=''>753744</td><td cnt=''>589559</td><td>78%</td>
+<td cnt=''>0</td><td cnt=''>45481</td><td>0%</td>
+<td cnt=''>19780</td><td cnt=''>48424</td><td>244%</td>
+<td cnt=''>10000</td><td cnt=''>16957</td><td>169%</td>
+<td cnt=''>42400</td><td cnt=''>0</td><td>0%</td>
+<td cnt=''>825924</td><td cnt=''>700421</td><td>84%</td></tr>
+<tr id='CZ063'><th> Vysočina</th><td cnt=''>506022</td><td cnt=''>460863</td><td>91%</td>
+<td cnt=''>0</td><td cnt=''>57435</td><td>0%</td>
+<td cnt=''>22370</td><td cnt=''>53750</td><td>240%</td>
+<td cnt=''>5330</td><td cnt=''>14284</td><td>268%</td>
+<td cnt=''>44530</td><td cnt=''>0</td><td>0%</td>
+<td cnt=''>578252</td><td cnt=''>586332</td><td>101%</td></tr>
+<tr id='CZ053'><th>Pardubický </th><td cnt=''>481098</td><td cnt=''>461369</td><td>95%</td>
+<td cnt=''>0</td><td cnt=''>49978</td><td>0%</td>
+<td cnt=''>1540</td><td cnt=''>41445</td><td>2691%</td>
+<td cnt=''>2545</td><td cnt=''>21558</td><td>847%</td>
+<td cnt=''>14450</td><td cnt=''>0</td><td>0%</td>
+<td cnt=''>499633</td><td cnt=''>574350</td><td>115%</td></tr>
+<tr id='CZ0'><th>Celkem ČR</th><td cnt=''>12501606</td><td cnt=''>10640715</td><td>85%</td>
+<td cnt=''>0</td><td cnt=''>1010993</td><td>0%</td>
+<td cnt=''>494870</td><td cnt=''>882810</td><td>178%</td>
+<td cnt=''>206405</td><td cnt=''>341844</td><td>165%</td>
+<td cnt=''>815890</td><td cnt=''>0</td><td>0%</td>
+<td cnt=''>14018771</td><td cnt=''>12876362</td><td>91%</td></tr>
 
 </tbody>
 </table>
@@ -141,9 +156,9 @@ legendu; Comirnaty D => <b>d</b>odávky, Comirnaty V => <b>v</b>yočkováno, Com
 Kraje obyvatelstvo (4)
 <hr>
 <a target='_blank' href='https://onemocneni-aktualne.mzcr.cz/api/v2/covid-19'>https://onemocneni-aktualne.mzcr.cz/api/v2/covid-19</a>:<br>
-1: COVID-19: Přehled vykázaných očkování podle krajů ČR (<span id='dockovani'>2021-11-16</span>)<br>
+1: COVID-19: Přehled vykázaných očkování podle krajů ČR (<span id='dockovani'>2021-11-17</span>)<br>
 <!-- 2: COVID-19: Přehled spotřeby podle očkovacích míst ČR <span id='dspotreba'>..nahrávám</span><br> -->
-2: COVID-19: Přehled distribuce očkovacích látek v ČR (<span id='dprijem'>2021-11-16</span>)<br>
+2: COVID-19: Přehled distribuce očkovacích látek v ČR (<span id='dprijem'>2021-11-17</span>)<br>
 3: <a target='_blank' href='https://www.ecdc.europa.eu/en/publications-data/data-covid-19-vaccination-eu-eea'>https://www.ecdc.europa.eu/en/publications-data/data-covid-19-vaccination-eu-eea</a>(2021-W45)<br>
 4: <a target='blank' href='https://vdb.czso.cz/vdbvo2/faces/cs/index.jsf?page=vystup-objekt&pvo=DEM04&z=T&f=TABULKA&skupId=527&katalog=30845&pvo=DEM04&c=v3~9__RP2019MP12'>ČSÚ</a>
 </body>
